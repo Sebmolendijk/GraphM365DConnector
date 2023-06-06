@@ -1,0 +1,1573 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0.",
+    "title": "Microsoft 365 Defender",
+    "description": "Microsoft 365 Defender is a unified pre- and post-breach enterprise defense suite that natively coordinates detection, prevention, investigation, and response across endpoints, identities, email, and applications to provide integrated protection against sophisticated attacks.",
+    "contact":{
+      "name": "Microsoft",
+      "url": "http://flow.microsoft.com/support/"
+    }
+  },
+  "host": "graph.microsoft.com",
+  "basePath": "/",
+  "schemes": [
+    "https"
+  ],
+  "consumes": [],
+  "produces": [
+    "application/json"
+  ],
+  "x-ms-connector-metadata":[
+    {
+      "propertyName": "Website",
+      "propertyValue": "https://www.microsoft.com/en-us/security/business/threat-protection/microsoft-365-defender"
+    },
+    {
+      "propertyName": "Privacy Policy",
+      "propertyValue": "https://support.microsoft.com/en-us/privacy"
+    },
+    {
+      "propertyName": "Categories",
+      "propertyValue": "Security"
+    }
+  ],
+  "paths": {
+    "/beta/security/incidents": {
+      "get": {
+        "tags": [
+          "Incidents"
+        ],
+        "summary": "Incidents - List incidents",
+        "description": "List the most recent Microsoft 365 Defender incidents.",
+        "operationId": "Incident-ListIncidents",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "Filters the results, using OData syntax (ex. severity eq 'high')",
+            "x-ms-summary": "Filters results",
+            "x-ms-visibility": "important"
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "Selects which properties to include in the response, defaults to all (ex. displayName,createdDateTime,severity)",
+            "x-ms-summary": "Selects properties",
+            "x-ms-visibility": "advanced"
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "Sorts the results (ex. createdDateTime asc)",
+            "x-ms-summary": "Sorts results",
+            "x-ms-visibility": "advanced"
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "type": "boolean",
+            "required": false,
+            "description": "Includes a count of the matching results in the response",
+            "x-ms-summary": "Includes count",
+            "x-ms-visibility": "advanced"
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "Returns only the first n results",
+            "x-ms-summary": "Returns first n results",
+            "x-ms-visibility": "advanced",
+            "format": "int32"
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "Skips only the first n results",
+            "x-ms-summary": "Skips first n results",
+            "x-ms-visibility": "advanced",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "@odata.count": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "Incidents count",
+                  "description": "The number of available Incidents by this query."
+                },
+                "@odata.nextLink": {
+                  "type": "string",
+                  "description": "A link to get the next results in case there are more results than requested.",
+                  "title": "Next Link"
+                },
+                "value": {
+                  "title": "Incidents",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Incident"
+                  },
+                  "description": "The Incidents returned."
+                }
+              }
+            }
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/beta/security/incidents/{Incident Id}": {
+      "get": {
+        "summary": "Incidents - Get incident by Id",
+        "description": "Get a specific Microsoft 365 Defender incident.",
+        "operationId": "Incident-GetIncidentById",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Incident Id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The identifier of the incident to retrieve.",
+            "x-ms-summary": "Id of the incident",
+            "x-ms-visibility": "important",
+            "x-ms-url-encoding": "single"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "$ref": "#/definitions/Incident"
+            }
+          }
+        },
+        "x-ms-visibility": "important"
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "default",
+            "schema": {}
+          }
+        },
+        "summary": "Incidents - Update incident",
+        "description": "Update a Microsoft 365 Defender Incident.",
+        "operationId": "Incident-UpdateIncident",
+        "x-ms-visibility": "important",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Incident Id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The identifier of the incident to update.",
+            "x-ms-summary": "Id of the incident",
+            "x-ms-visibility": "important",
+            "x-ms-url-encoding": "single"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "The status of the incident.",
+                  "title": "Status",
+                  "x-ms-visibility": "important",
+                  "enum": [
+                    "active",
+                    "resolved",
+                    "redirected"
+                  ]
+                },
+                "assignedTo": {
+                  "type": "string",
+                  "description": "Owner of the incident.",
+                  "title": "Assigned to",
+                  "x-ms-visibility": "important"
+                },
+                "classification": {
+                  "type": "string",
+                  "description": "The specification for the incident.",
+                  "title": "Classification",
+                  "x-ms-visibility": "important",
+                  "enum": [
+                    "falsePositive",
+                    "truePositive",
+                    "informationalExpectedActivity"
+                  ]
+                },
+                "determination": {
+                  "type": "string",
+                  "description": "Specifies the determination of the incident.",
+                  "title": "Determination",
+                  "x-ms-visibility": "important",
+                  "enum": [
+                    "apt",
+                    "malware",
+                    "securityPersonnel",
+                    "securityTesting",
+                    "unwantedSoftware",
+                    "other",
+                    "multiStagedAttack",
+                    "compromisedAccount",
+                    "phishing",
+                    "maliciousUserActivity",
+                    "notMalicious",
+                    "notEnoughDataToValidate",
+                    "confirmedActivity",
+                    "lineOfBusinessApplication"
+                  ]
+                },
+                "tags": {
+                  "type": "array",
+                  "title": "Tags",
+                  "items": {
+                    "type": "string",
+                    "description": "A single tag entity.",
+                    "title": "Tag",
+                    "x-ms-visibility": "important"
+                  },
+                  "description": "Array of custom tags associated with an incident."
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/beta/security/alerts_v2": {
+      "get": {
+        "summary": "Alerts - List alerts",
+        "description": "List the most recent Microsoft 365 Defender alerts.",
+        "operationId": "Alerts-ListAlerts",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "Filters the results, using OData syntax (ex. severity eq 'high').",
+            "x-ms-summary": "Filters results",
+            "x-ms-visibility": "important"
+          },
+          {
+            "name": "$select",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "Selects which properties to include in the response, defaults to all (ex. displayName,createdDateTime,severity).",
+            "x-ms-summary": "Selects properties",
+            "x-ms-visibility": "advanced"
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "type": "string",
+            "required": false,
+            "description": "Sorts the results (ex. createdDateTime asc).",
+            "x-ms-summary": "Sorts results",
+            "x-ms-visibility": "advanced"
+          },
+          {
+            "name": "$count",
+            "in": "query",
+            "type": "boolean",
+            "required": false,
+            "description": "Includes a count of the matching results in the response.",
+            "x-ms-summary": "Includes count",
+            "x-ms-visibility": "advanced"
+          },
+          {
+            "name": "$top",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "Returns only the first n results.",
+            "x-ms-summary": "Returns first n results",
+            "x-ms-visibility": "advanced",
+            "format": "int32"
+          },
+          {
+            "name": "$skip",
+            "in": "query",
+            "type": "integer",
+            "required": false,
+            "description": "Skips only the first n results.",
+            "x-ms-summary": "Skips first n results",
+            "x-ms-visibility": "advanced",
+            "format": "int32"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "@odata.count": {
+                  "type": "integer",
+                  "format": "int32",
+                  "title": "Alerts count",
+                  "description": "The number of available Alerts by this query."
+                },
+                "@odata.nextLink": {
+                  "type": "string",
+                  "description": "A link to get the next results in case there are more results than requested.",
+                  "title": "NextLink"
+                },
+                "value": {
+                  "title": "Alerts",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Alert"
+                  },
+                  "description": "value"
+                }
+              }
+            }
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/beta/security/alerts_v2/{Alert Id}": {
+      "get": {
+        "summary": "Alerts - Get alert by Id",
+        "description": "Get a specific Microsoft 365 Defender alert.",
+        "operationId": "Alerts-GetAlertById",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Alert Id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "The identifier of the alert to retrieve.",
+            "x-ms-summary": "Id of the alert",
+            "x-ms-visibility": "important",
+            "x-ms-url-encoding": "single"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "$ref": "#/definitions/Alert"
+            }
+          }
+        },
+        "x-ms-visibility": "important"
+      },
+      "patch": {
+        "responses": {
+          "200": {
+            "description": "default",
+            "schema": {}
+          }
+        },
+        "summary": "Alerts - Update alert",
+        "description": "Update a Microsoft 365 Defender alert.",
+        "operationId": "Alerts-UpdateAlert",
+        "x-ms-visibility": "important",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "Alert Id",
+            "in": "path",
+            "required": true,
+            "type": "string",
+            "description": "Unique identifier to represent the alert.",
+            "x-ms-visibility": "important",
+            "x-ms-summary": "Id of the alert",
+            "x-ms-url-encoding": "single"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "required": false,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "status": {
+                  "type": "string",
+                  "description": "The status of the alert.",
+                  "title": "Status",
+                  "x-ms-visibility": "important",
+                  "enum": [
+                    "new",
+                    "inProgress",
+                    "resolved"
+                  ]
+                },
+                "assignedTo": {
+                  "type": "string",
+                  "description": "Owner of the alert.",
+                  "title": "Assigned to",
+                  "x-ms-visibility": "important"
+                },
+                "classification": {
+                  "type": "string",
+                  "description": "Specifies the classification of the alert.",
+                  "title": "Classification",
+                  "enum": [
+                    "falsePositive",
+                    "truePositive",
+                    "benignPositive"
+                  ],
+                  "x-ms-visibility": "important"
+                },
+                "determination": {
+                  "type": "string",
+                  "description": "Specifies the determination of the alert.",
+                  "title": "Determination",
+                  "x-ms-visibility": "important",
+                  "enum": [
+                    "apt",
+                    "malware",
+                    "securityPersonnel",
+                    "securityTesting",
+                    "unwantedSoftware",
+                    "other",
+                    "multiStagedAttack",
+                    "compromisedUser",
+                    "phishing",
+                    "maliciousUserActivity",
+                    "clean",
+                    "insufficientData",
+                    "confirmedUserActivity",
+                    "lineOfBusinessApplication"
+                  ]
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    "/beta/security/runHuntingQuery": {
+      "post": {
+        "summary": "Advanced Hunting",
+        "description": "Run custom query in Microsoft 365 Defender and list results.",
+        "operationId": "AdvancedHunting",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "Query": {
+                  "type": "string",
+                  "description": "The query to run.",
+                  "title": "Query",
+                  "x-ms-visibility": "important"
+                }
+              },
+              "default": {}
+            },
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "200",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "results": {
+                  "type": "array",
+                  "items": {
+                    "type": "object",
+                    "properties": {
+                      "Count": {
+                        "type": "integer",
+                        "format": "int32",
+                        "description": "Count.",
+                        "title": "",
+                        "x-ms-visibility": "internal"
+                      }
+                    }
+                  },
+                  "description": "results"
+                }
+              }
+            }
+          }
+        },
+        "x-ms-visibility": "important"
+      }
+    },
+    "/trigger/beta/security/alerts_v2": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "default",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Alert"
+                  },
+                  "description": "value"
+                }
+              }
+            }
+          }
+        },
+        "x-ms-trigger": "batch",
+        "x-ms-trigger-metadata": {
+          "mode": "polling",
+          "kind": "query"
+        },
+        "summary": "When a M365 Defender alert is created",
+        "description": "Triggers when a new M365 Defender alert is created.",
+        "operationId": "Trigger-M365DAlert",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-ms-visibility": "internal",
+            "default": "createdDateTime desc"
+          }
+        ],
+        "x-ms-trigger-hint": "",
+        "x-ms-visibility": "important"
+      }
+    },
+    "/trigger/beta/security/incidents": {
+      "get": {
+        "responses": {
+          "200": {
+            "description": "default",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "value": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/Incident"
+                  },
+                  "description": "value"
+                }
+              }
+            }
+          }
+        },
+        "x-ms-trigger": "batch",
+        "x-ms-trigger-metadata": {
+          "mode": "polling",
+          "kind": "query"
+        },
+        "summary": "When a M365 Defender Incident is created",
+        "description": "Triggers when a new M365 Defender Incident is created.",
+        "operationId": "Trigger-M365DIncident",
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "$filter",
+            "in": "query",
+            "required": false,
+            "type": "string",
+            "x-ms-visibility": "internal"
+          },
+          {
+            "name": "$orderby",
+            "in": "query",
+            "required": true,
+            "type": "string",
+            "x-ms-visibility": "internal",
+            "default": "createdDateTime desc"
+          }
+        ],
+        "x-ms-trigger-hint": "",
+        "x-ms-visibility": "important"
+      }
+    }
+  },
+  "definitions": {
+    "Incident": {
+      "type": "object",
+      "title": "Incident",
+      "description": "A single incident entity.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier to represent the incident.",
+          "title": "Id"
+        },
+        "tenantId": {
+          "type": "string",
+          "description": "The Azure Active Directory tenant the   incident was created in.",
+          "title": "Tenant id"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the incident.",
+          "title": "Status"
+        },
+        "incidentWebUrl": {
+          "type": "string",
+          "description": "URL for the incident page in M365Defender portal.",
+          "title": "Web URL"
+        },
+        "redirectIncidentId": {
+          "type": "string",
+          "description": "Only populated in case an incident is being grouped together with another incident, as part of the incident   processing logic.",
+          "title": "Redirected incident id"
+        },
+        "displayName": {
+          "type": "string",
+          "description": "The incident name.",
+          "title": "Display name"
+        },
+        "createdDateTime": {
+          "type": "string",
+          "description": "Time when incident was first created.",
+          "title": "Created datetime"
+        },
+        "lastUpdateDateTime": {
+          "type": "string",
+          "description": "Time when the incident was last updated.",
+          "title": "Last update datetime"
+        },
+        "assignedTo": {
+          "type": "string",
+          "description": "Owner of the incident, or null if no owner is assigned.",
+          "title": "Assigned to"
+        },
+        "classification": {
+          "type": "string",
+          "description": "The specification for the incident.",
+          "title": "Classification"
+        },
+        "determination": {
+          "type": "string",
+          "description": "Specifies the determination of the incident.",
+          "title": "Determination"
+        },
+        "severity": {
+          "type": "string",
+          "description": "Incident Severity.",
+          "title": "Severity"
+        },
+        "tags": {
+          "type": "array",
+          "title": "Tags",
+          "description": "Tags associated with an incident.",
+          "items": {
+            "type": "string",
+            "description": "Tag created.",
+            "title": "Tag"
+          }
+        },
+        "comments": {
+          "$ref": "#/definitions/Comments"
+        }
+      }
+    },
+    "Alert": {
+      "type": "object",
+      "title": "Alert",
+      "description": "A single alert entity.",
+      "properties": {
+        "id": {
+          "type": "string",
+          "description": "Unique identifier to represent the alert.",
+          "title": "Id"
+        },
+        "providerAlertId": {
+          "type": "string",
+          "description": "The ID of the alert as it appears in the provider product that generated the alert.",
+          "title": "Provider alert id"
+        },
+        "incidentId": {
+          "type": "string",
+          "description": "Unique identifier to represent the incident this alert is associated with.",
+          "title": "Incident id"
+        },
+        "status": {
+          "type": "string",
+          "description": "The status of the alert.",
+          "title": "Status"
+        },
+        "severity": {
+          "type": "string",
+          "description": "Indicates the possible impact on assets.",
+          "title": "Severity"
+        },
+        "classification": {
+          "type": "string",
+          "description": "Specifies the classification of the alert.",
+          "title": "Classification"
+        },
+        "determination": {
+          "type": "string",
+          "description": "Specifies the determination of the alert.",
+          "title": "Determination"
+        },
+        "serviceSource": {
+          "type": "string",
+          "description": "The product service that created this alert.",
+          "title": "Service source"
+        },
+        "detectionSource": {
+          "type": "string",
+          "description": "Detection technology or sensor that identified the notable component or activity.",
+          "title": "Detection source"
+        },
+        "detectorId": {
+          "type": "string",
+          "description": "The ID of the detector that triggered the alert.",
+          "title": "Detector id"
+        },
+        "tenantId": {
+          "type": "string",
+          "description": "The Azure Active Directory tenant the alert was created in.",
+          "title": "Tenant id"
+        },
+        "title": {
+          "type": "string",
+          "description": "Brief identifying string value describing the alert.",
+          "title": "Title"
+        },
+        "description": {
+          "type": "string",
+          "description": "String value describing each alert.",
+          "title": "Description"
+        },
+        "recommendedActions": {
+          "type": "string",
+          "description": "Recommended response and remediation actions to take in the event this alert was generated.",
+          "title": "Recommended actions"
+        },
+        "category": {
+          "type": "string",
+          "description": "The attack kill-chain category the alert belongs - Aligned with the MITRE ATT&CK framework.",
+          "title": "Category"
+        },
+        "assignedTo": {
+          "type": "string",
+          "description": "Owner of the incident - or null if no owner is assigned.",
+          "title": "Assigned to"
+        },
+        "alertWebUrl": {
+          "type": "string",
+          "description": "URL for the alert page in Microsoft 365 Defender portal.",
+          "title": "Alert web url"
+        },
+        "incidentWebUrl": {
+          "type": "string",
+          "description": "URL for the alert page in Microsoft 365 Defender portal.",
+          "title": "Incident web url"
+        },
+        "actorDisplayName": {
+          "type": "string",
+          "description": "The adversary or activity group that is associated with this alert.",
+          "title": "Actor display name"
+        },
+        "threatDisplayName": {
+          "type": "string",
+          "description": "The thread associated with this alert.",
+          "title": "Threat display name"
+        },
+        "threatFamilyName": {
+          "type": "string",
+          "description": "Threat family associated with this alert.",
+          "title": "Threat Family name"
+        },
+        "mitreTechniques": {
+          "type": "array",
+          "title": "MITRE technique",
+          "items": {
+            "type": "string",
+            "title": "MITRE techniques"
+          },
+          "description": "The attack techniques, as aligned with the MITRE ATT&CK framework."
+        },
+        "createdDateTime": {
+          "type": "string",
+          "description": "Time when the alert was created.",
+          "title": "Created datetime"
+        },
+        "lastUpdateDateTime": {
+          "type": "string",
+          "description": "Time when the alert was last updated.",
+          "title": "Last update datetime"
+        },
+        "resolvedDateTime": {
+          "type": "string",
+          "description": "Time when the alert was resolved.",
+          "title": "Resolved datetime"
+        },
+        "firstActivityDateTime": {
+          "type": "string",
+          "description": "The earliest activity associated with the alert.",
+          "title": "First activity datetime"
+        },
+        "lastActivityDateTime": {
+          "type": "string",
+          "description": "The latest activity associated with the alert.",
+          "title": "Last activity datetime"
+        },
+        "comments": {
+          "$ref": "#/definitions/Comments"
+        },
+        "evidence": {
+          "type": "array",
+          "title": "Evidence",
+          "description": "Collection of all the evidence assets and entities related to the alert.",
+          "items": {
+            "type": "object",
+            "properties": {
+              "@odata.type": {
+                "type": "string",
+                "description": "Type of entity related to the alert.",
+                "title": "Data type"
+              },
+              "createdDateTime": {
+                "type": "string",
+                "description": "The time the evidence was created and added to the alert.",
+                "title": "Created datetime"
+              },
+              "verdict": {
+                "type": "string",
+                "description": "The decision reached by automated investigation.",
+                "title": "Verdict"
+              },
+              "remediationStatus": {
+                "type": "string",
+                "description": "Status of the remediation action taken.",
+                "title": "Remediation status"
+              },
+              "remediationStatusDetails": {
+                "type": "string",
+                "description": "Details about the remediation status.",
+                "title": "Remediation status details"
+              },
+              "userAccount": {
+                "type": "object",
+                "title": "User account",
+                "properties": {
+                  "accountName": {
+                    "type": "string",
+                    "description": "The user account's displayed name.",
+                    "title": "Account name"
+                  },
+                  "domainName": {
+                    "type": "string",
+                    "description": "The name of the Active Directory domain the user is a member of.",
+                    "title": "Domain name"
+                  },
+                  "userSid": {
+                    "type": "string",
+                    "description": "The local Security Identifier of the user account.",
+                    "title": "User sid"
+                  },
+                  "azureAdUserId": {
+                    "type": "string",
+                    "description": "The user object Identifier in Azure AD.",
+                    "title": "Azure AD user id"
+                  },
+                  "userPrincipalName": {
+                    "type": "string",
+                    "description": "The User Principal Name of the account in Azure AD.",
+                    "title": "User principal name"
+                  }
+                },
+                "description": "The user account details."
+              },
+              "fileDetails": {
+                "type": "object",
+                "title": "File details",
+                "properties": {
+                  "sha1": {
+                    "type": "string",
+                    "description": "The Sha1 cryptographic hash of the file content.",
+                    "title": "SHA1"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "description": "The Sha256 cryptographic hash of the file content.",
+                    "title": "SHA256"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "The name of the file.",
+                    "title": "File name"
+                  },
+                  "filePath": {
+                    "type": "string",
+                    "description": "The file path (location) of the file instance.",
+                    "title": "File path"
+                  },
+                  "fileSize": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The size of the file in bytes.",
+                    "title": "File size"
+                  },
+                  "filePublisher": {
+                    "type": "string",
+                    "description": "The size of the file in bytes.",
+                    "title": "File publisher"
+                  },
+                  "signer": {
+                    "type": "string",
+                    "description": "The signer of the signed file.",
+                    "title": "Signer"
+                  },
+                  "issuer": {
+                    "type": "string",
+                    "description": "The certificate authority (CA) that issued the certificate.",
+                    "title": "Issuer"
+                  }
+                },
+                "description": "The file details."
+              },
+              "processId": {
+                "type": "integer",
+                "format": "int32",
+                "description": "Process ID (PID) of the newly created process.",
+                "title": "Process id"
+              },
+              "parentProcessId": {
+                "type": "integer",
+                "format": "int32",
+                "description": "Process ID (PID) of the parent process that spawned the process.",
+                "title": "Parent process id"
+              },
+              "processCommandLine": {
+                "type": "string",
+                "description": "Command line used to create the new process.",
+                "title": "Process command line"
+              },
+              "processCreationDateTime": {
+                "type": "string",
+                "description": "Date and time the process was created.",
+                "title": "Process creation datetime"
+              },
+              "parentProcessCreationDateTime": {
+                "type": "string",
+                "description": "Date and time when the parent of the process was created.",
+                "title": "Parent process datetime"
+              },
+              "detectionStatus": {
+                "type": "string",
+                "description": "The status of the detection.",
+                "title": "Detection status"
+              },
+              "mdeDeviceId": {
+                "type": "string",
+                "description": "A unique identifier assigned to a device by Microsoft Defender for Endpoint.",
+                "title": "MDE device id"
+              },
+              "imageFile": {
+                "type": "object",
+                "title": "Image file",
+                "properties": {
+                  "sha1": {
+                    "type": "string",
+                    "description": "The Sha1 cryptographic hash of the file content.",
+                    "title": "SHA1"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "description": "The Sha256 cryptographic hash of the file content.",
+                    "title": "SHA256"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "The name of the file.",
+                    "title": "File name"
+                  },
+                  "filePath": {
+                    "type": "string",
+                    "description": "The file path (location) of the file instance.",
+                    "title": "File path"
+                  },
+                  "fileSize": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The size of the file in bytes.",
+                    "title": "File size"
+                  },
+                  "filePublisher": {
+                    "type": "string",
+                    "description": "The size of the file in bytes.",
+                    "title": "File publisher"
+                  },
+                  "signer": {
+                    "type": "string",
+                    "description": "The signer of the signed file.",
+                    "title": "Signer"
+                  },
+                  "issuer": {
+                    "type": "string",
+                    "description": "The certificate authority (CA) that issued the certificate.",
+                    "title": "Issuer"
+                  }
+                },
+                "description": "Image file details."
+              },
+              "parentProcessImageFile": {
+                "type": "object",
+                "title": "Parent process image file",
+                "properties": {
+                  "sha1": {
+                    "type": "string",
+                    "description": "The Sha1 cryptographic hash of the file content.",
+                    "title": "SHA1"
+                  },
+                  "sha256": {
+                    "type": "string",
+                    "description": "The Sha256 cryptographic hash of the file content.",
+                    "title": "SHA256"
+                  },
+                  "fileName": {
+                    "type": "string",
+                    "description": "The name of the file.",
+                    "title": "File name"
+                  },
+                  "filePath": {
+                    "type": "string",
+                    "description": "The file path (location) of the file instance.",
+                    "title": "File path"
+                  },
+                  "fileSize": {
+                    "type": "integer",
+                    "format": "int32",
+                    "description": "The size of the file in bytes.",
+                    "title": "File size"
+                  },
+                  "filePublisher": {
+                    "type": "string",
+                    "description": "The size of the file in bytes.",
+                    "title": "File publisher"
+                  },
+                  "signer": {
+                    "type": "string",
+                    "description": "The signer of the signed file.",
+                    "title": "Signer"
+                  },
+                  "issuer": {
+                    "type": "string",
+                    "description": "The certificate authority (CA) that issued the certificate.",
+                    "title": "Issuer"
+                  }
+                },
+                "description": "Parent process image file details."
+              },
+              "ipAddress": {
+                "type": "string",
+                "description": "The value of the IP Address - can be either in ipV4Address or ipV6Address format.",
+                "title": "IP address"
+              },
+              "url": {
+                "type": "string",
+                "description": "The Unique Resource Locator (URL).",
+                "title": "URL"
+              },
+              "registryKey": {
+                "type": "string",
+                "description": "Registry key that the recorded action was applied to.",
+                "title": "Registry key"
+              },
+              "registryHive": {
+                "type": "string",
+                "description": "Registry hive of the key that the recorded action was applied to.",
+                "title": "Registry hive"
+              },
+              "registryValue": {
+                "type": "string",
+                "description": "Data of the registry value that the recorded action was applied to.",
+                "title": "Registry value"
+              },
+              "registryValueName": {
+                "type": "string",
+                "description": "Name of the registry value that the recorded action was applied to.",
+                "title": "Registry value name"
+              },
+              "registryValueType": {
+                "type": "string",
+                "description": "Data type such as binary or string of the registry value that the recorded action was applied to.",
+                "title": "Registry value"
+              },
+              "objectId": {
+                "type": "string",
+                "description": "The unique identifier of the application object in Azure AD.",
+                "title": "Object id"
+              },
+              "publisher": {
+                "type": "string",
+                "description": "The name of the application publisher.",
+                "title": "Publisher"
+              },
+              "instanceId": {
+                "type": "integer",
+                "format": "int32",
+                "description": "Identifier of the instance of the SaaS application.",
+                "title": "Instance id"
+              },
+              "instanceName": {
+                "type": "string",
+                "description": "Name of the instance of the SaaS application.",
+                "title": "Instance name"
+              },
+              "saasAppId": {
+                "type": "integer",
+                "format": "int32",
+                "description": "The identifier of the Software as a Service (SaaS) application.",
+                "title": "SaaS app id"
+              },
+              "securityGroupId": {
+                "type": "string",
+                "description": "Unique identifier of the security group.",
+                "title": "Security group id"
+              },
+              "primaryAddress": {
+                "type": "string",
+                "description": "The primary email address of the mailbox.",
+                "title": "Primary address"
+              },
+              "clusterBy": {
+                "type": "string",
+                "description": "How the similar emails were clustered.",
+                "title": "Cluster by"
+              },
+              "clusterByValue": {
+                "type": "string",
+                "description": "The value utilized to cluster the similar emails.",
+                "title": "Cluster by value"
+              },
+              "query": {
+                "type": "string",
+                "description": "The query used to identify the email cluster.",
+                "title": "Query"
+              },
+              "urn": {
+                "type": "string",
+                "description": "Identifier of the automated investigation where the cluster was identified.",
+                "title": "URN"
+              },
+              "emailCount": {
+                "type": "integer",
+                "format": "int32",
+                "description": "Count of emails in the email cluster.",
+                "title": "Email count"
+              },
+              "networkMessageIds": {
+                "type": "array",
+                "title": "Network message ids",
+                "items": {
+                  "type": "string",
+                  "description": "A single network message id entity.",
+                  "title": "Network message id"
+                },
+                "description": "Unique identifiers for the emails in the cluster, generated by Microsoft 365."
+              },
+              "receivedDateTime": {
+                "type": "string",
+                "description": "Date and time when the email was received.",
+                "title": "Received datetime"
+              },
+              "networkMessageId": {
+                "type": "string",
+                "description": "Unique identifier for the email generated by Microsoft 365.",
+                "title": "Network message id"
+              },
+              "internetMessageId": {
+                "type": "string",
+                "description": "Public-facing identifier for the email that is set by the sending email system.",
+                "title": "Internet message id"
+              },
+              "subject": {
+                "type": "string",
+                "description": "Subject of the email.",
+                "title": "Subject"
+              },
+              "language": {
+                "type": "string",
+                "description": "Detected language of the email content.",
+                "title": "Language"
+              },
+              "senderIp": {
+                "type": "string",
+                "description": "IP address of the last detected mail server that relayed the message.",
+                "title": "Sender ip"
+              },
+              "recipientEmailAddress": {
+                "type": "string",
+                "description": "Email address of the recipient or email address of the recipient after distribution list expansion.",
+                "title": "Recipient email address"
+              },
+              "antiSpamDirection": {
+                "type": "string",
+                "description": "Direction of the email relative to your network.",
+                "title": "Anti-spam direction"
+              },
+              "deliveryAction": {
+                "type": "string",
+                "description": "Delivery action of the email.",
+                "title": "Delivery action"
+              },
+              "deliveryLocation": {
+                "type": "string",
+                "description": "Location where the email was delivered.",
+                "title": "Delivery location"
+              },
+              "attachmentsCount": {
+                "type": "integer",
+                "format": "int32",
+                "description": "Number of attachments in the email.",
+                "title": "Attachments count"
+              },
+              "urlCount": {
+                "type": "integer",
+                "format": "int32",
+                "description": "Number of embedded URLs in the email.",
+                "title": "Url count"
+              },
+              "threats": {
+                "type": "array",
+                "title": "Threats",
+                "items": {
+                  "type": "string",
+                  "title": "Threat",
+                  "description": "A single threat entity."
+                },
+                "description": "Collection of detection names for malware or other threats found."
+              },
+              "threatDetectionMethods": {
+                "type": "array",
+                "title": "Threat detection methods",
+                "items": {
+                  "type": "string",
+                  "description": "A single threat detection method entity.",
+                  "title": "Threat detection method"
+                },
+                "description": "Collection of methods used to detect malware / phishing / other threats found in the email."
+              },
+              "urls": {
+                "type": "array",
+                "title": "Urls",
+                "items": {
+                  "type": "string",
+                  "title": "Url",
+                  "description": "A single url entity."
+                },
+                "description": "Collection of the URLs contained in this email."
+              },
+              "p1Sender": {
+                "type": "object",
+                "title": "P1 sender",
+                "properties": {
+                  "emailAddress": {
+                    "type": "string",
+                    "description": "Sender email address.",
+                    "title": "Email address"
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The name of the sender.",
+                    "title": "Display name"
+                  },
+                  "domainName": {
+                    "type": "string",
+                    "description": "Sender domain.",
+                    "title": "Domain name"
+                  }
+                },
+                "description": "P1 sender details."
+              },
+              "p2Sender": {
+                "type": "object",
+                "title": "P2 sender",
+                "properties": {
+                  "emailAddress": {
+                    "type": "string",
+                    "description": "Sender email address.",
+                    "title": "Email address"
+                  },
+                  "displayName": {
+                    "type": "string",
+                    "description": "The name of the sender.",
+                    "title": "Display name"
+                  },
+                  "domainName": {
+                    "type": "string",
+                    "description": "Sender domain  .",
+                    "title": "Domain name"
+                  }
+                },
+                "description": "P2 sender details."
+              },
+              "firstSeenDateTime": {
+                "type": "string",
+                "description": "The date and time when the device was first seen.",
+                "title": "First seen datetime"
+              },
+              "azureAdDeviceId": {
+                "type": "string",
+                "description": "A unique identifier assigned to a device by Azure Active Directory (AAD) when device is AAD joined.",
+                "title": "Azure AD device id"
+              },
+              "deviceDnsName": {
+                "type": "string",
+                "description": "The FQDN (Fully Qualified Domain Name) for the device.",
+                "title": "Device dns name"
+              },
+              "osPlatform": {
+                "type": "string",
+                "description": "The OS platform the device is running.",
+                "title": "OS platform"
+              },
+              "osBuild": {
+                "type": "integer",
+                "format": "int32",
+                "description": "The build version for the OS the device is running.",
+                "title": "OS Build"
+              },
+              "version": {
+                "type": "string",
+                "description": "The version of the OS platform.",
+                "title": "Version"
+              },
+              "rbacGroupId": {
+                "type": "integer",
+                "format": "int32",
+                "description": "RBAC (Role Based Access Control) device group id.",
+                "title": "RBAC group id"
+              },
+              "rbacGroupName": {
+                "type": "string",
+                "description": "RBAC (Role Based Access Control) device group name.",
+                "title": "RBAC group name"
+              },
+              "healthStatus": {
+                "type": "string",
+                "description": "The health state of the device.",
+                "title": "health status"
+              },
+              "riskScore": {
+                "type": "string",
+                "description": "Risk score as evaluated by Microsoft Defender for Endpoint.",
+                "title": "Risk Score"
+              },
+              "onboardingStatus": {
+                "type": "string",
+                "description": "Status of machine onboarding to Microsoft Defender for Endpoint.",
+                "title": "Onboarding status"
+              },
+              "defenderAvStatus": {
+                "type": "string",
+                "description": "defenderAvStatus.",
+                "title": "Defender AV status"
+              },
+              "vmMetadata": {
+                "type": "object",
+                "title": "VM metadata",
+                "properties": {
+                  "vmId": {
+                    "type": "string",
+                    "description": "Unique identifier of the Virtual Machine instance.",
+                    "title": "VM id"
+                  },
+                  "cloudProvider": {
+                    "type": "string",
+                    "description": "The cloud provider hosting the virtual machine.",
+                    "title": "Cloud provider"
+                  },
+                  "resourceId": {
+                    "type": "string",
+                    "description": "Unique identifier of the Azure Resource.",
+                    "title": "Resource id"
+                  },
+                  "subscriptionId": {
+                    "type": "string",
+                    "description": "Unique identifier of the Azure subscription the customer tenant belongs to.",
+                    "title": "Subscription id"
+                  }
+                },
+                "description": "Metadata of the Virtual Machine (VM) Microsoft Defender for Endpoint is running on."
+              },
+              "loggedOnUsers": {
+                "type": "array",
+                "title": "Logged on users",
+                "items": {
+                  "type": "object",
+                  "title": "Logged on user",
+                  "properties": {
+                    "accountName": {
+                      "type": "string",
+                      "description": "User account name of the logged-on user.",
+                      "title": "Account name"
+                    },
+                    "domainName": {
+                      "type": "string",
+                      "description": "User account domain of the logged-on user.",
+                      "title": "Domain name"
+                    }
+                  }
+                },
+                "description": "loggedOnUsers"
+              },
+              "displayName": {
+                "type": "string",
+                "description": "Display Name.",
+                "title": "Display name"
+              },
+              "appId": {
+                "type": "string",
+                "description": "Unique identifier of the application.",
+                "title": "App id"
+              },
+              "roles": {
+                "type": "array",
+                "title": "Roles",
+                "items": {
+                  "type": "string",
+                  "title": "Role",
+                  "description": "A single role entity."
+                },
+                "description": "The role/s an evidence entity represents in an alert."
+              },
+              "tags": {
+                "type": "array",
+                "title": "Tags",
+                "items": {
+                  "type": "string",
+                  "title": "Tag",
+                  "description": "A single tag entity."
+                },
+                "description": "Array of custom tags associated with an evidence instance."
+              }
+            }
+          }
+        }
+      }
+    },
+    "Comments": {
+      "type": "array",
+      "title": "Comments",
+      "description": "Comments created by SecOps when managing the incident.",
+      "items": {
+        "type": "object",
+        "properties": {
+          "comment": {
+            "type": "string",
+            "description": "A single comment entity.",
+            "title": "Comment"
+          },
+          "createdByDisplayName": {
+            "type": "string",
+            "description": "Creator of the incident comment.",
+            "title": "Created by"
+          },
+          "createdDateTime": {
+            "type": "string",
+            "description": "Time when incident comment was created.",
+            "title": "Created datetime"
+          }
+        }
+      }
+    }
+  },
+  "parameters": {},
+  "responses": {},
+  "securityDefinitions": {
+    "oauth2_auth": {
+      "type": "oauth2",
+      "flow": "accessCode",
+      "authorizationUrl": "https://login.windows.net/common/oauth2/authorize",
+      "tokenUrl": "https://login.windows.net/common/oauth2/authorize",
+      "scopes": {}
+    }
+  },
+  "security": [
+    {
+      "oauth2_auth": []
+    }
+  ],
+  "tags": []
+}

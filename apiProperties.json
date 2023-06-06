@@ -1,0 +1,86 @@
+{
+  "properties": {
+    "connectionParameters": {
+      "token": {
+        "type": "oauthSetting",
+        "oAuthSettings": {
+          "identityProvider": "aad",
+          "clientId": "",
+          "scopes": [
+            "SecurityAlert.ReadWrite.All SecurityIncident.ReadWrite.All ThreatHunting.Read.All"
+          ],
+          "redirectMode": "Global",
+          "redirectUrl": [
+            "https://global.consent.azure-apim.net/redirect",
+            "https://global-test.consent.azure-apim.net/redirect"
+          ],
+          "properties": {
+            "IsFirstParty": "False",
+            "AzureActiveDirectoryResourceId": "https://graph.microsoft.com",
+            "IsOnbehalfofLoginSupported": true
+          },
+          "customParameters": {
+            "loginUri": {
+              "value": "https://login.windows.net"
+            },
+            "tenantId": {
+              "value": ""
+            },
+            "resourceUri": {
+              "value": "https://graph.microsoft.com"
+            },
+            "enableOnbehalfOfLogin": {
+              "value": "false"
+            }
+          }
+        }
+      },
+      "token:TenantId": {
+        "type": "string",
+        "metadata": {
+          "sourceType": "AzureActiveDirectoryTenant"
+        },
+        "uiDefinition": {
+          "constraints": {
+            "required": "false",
+            "hidden": "true"
+          }
+        }
+      }
+    },
+    "iconBrandColor": "#D9D9D9",
+    "capabilities": [],
+    "publisher": "Microsoft",
+    "stackOwner": "Microsoft",
+    "policyTemplateInstances": [
+      {
+        "templateId": "pollingtrigger",
+        "title": "PollingTriggerPolicy_18f1ea65-fa8c-bfb8-a3f6-fe0c6d89f345",
+        "type": "PollingTrigger",
+        "parameters": {
+          "x-ms-apimTemplateParameter.triggerConfig": {
+            "$filter": "createdDateTime gt @{triggerBody().value[0].createdDateTime}"
+          },
+          "x-ms-apimTemplateParameter.triggerDataPath": "@triggerBody().value",
+          "x-ms-apimTemplate-operationName": [
+            "Trigger-M365DAlert"
+          ]
+        }
+      },
+      {
+        "templateId": "pollingtrigger",
+        "title": "PollingTriggerPolicy_e88cb65e-d678-86f4-5c3b-951d3def9666",
+        "type": "PollingTrigger",
+        "parameters": {
+          "x-ms-apimTemplateParameter.triggerConfig": {
+            "$filter": "createdDateTime gt @{triggerBody().value[0].createdDateTime}"
+          },
+          "x-ms-apimTemplateParameter.triggerDataPath": "@triggerBody().value",
+          "x-ms-apimTemplate-operationName": [
+            "Trigger-M365DIncident"
+          ]
+        }
+      }
+    ]
+  }
+}
