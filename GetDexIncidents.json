@@ -29,7 +29,7 @@
                         "inputs": {
                             "body": {
                                 "incidentArmId": "@{body('Get_Sentinel_incident')?['value']?[0]?['id']}",
-                                "message": "<p>There is a new Defender Experts Managed Response requiring your attention:<br>\n<br>\n&lt;a href=\"@{items('For_each_incident')?['incidentWebUrl']}\"&gt;M365 Defender Incident&lt;/a&gt;</p>"
+                                "message": "<p>There is a new Defender Experts Managed Response requiring your attention:<br>\n<br>\n@{items('For_each_incident')?['incidentWebUrl']}</p>"
                             },
                             "host": {
                                 "connection": {
