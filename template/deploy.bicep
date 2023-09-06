@@ -1,5 +1,9 @@
+
 param name string = 'GraphSecurity'
 param location string = resourceGroup().location
+
+var iconBase64 = loadFileAsBase64('./icon.png')
+
 
 resource symbolicname 'Microsoft.Web/customApis@2016-06-01' = {
   name: name
@@ -7,27 +11,18 @@ resource symbolicname 'Microsoft.Web/customApis@2016-06-01' = {
   tags: {
   }
   properties: {
-    apiDefinitions: {
-      modifiedSwaggerUrl: 'string'
-      originalSwaggerUrl: 'string'
-    }
-    apiType: 'string'
+
+    apiType: 'Rest'
     backendService: {
-      serviceUrl: 'string'
+      serviceUrl: 'https://graph.microsoft.com'
     }
-    brandColor: 'string'
-    capabilities: [
-      'string'
-    ]
+ 
     connectionParameters: {}
-    description: 'string'
-    displayName: 'string'
-    iconUri: loadFileAsBase64('./icon.png')
-    runtimeUrls: [
-      'string'
-    ]
+    description: 'Connector used to interact with Microsoft Graph Security API.'
+    displayName: 'GraphSecurity'
+    iconUri: iconBase64
+
     swagger: loadJsonContent('./GraphSecurity.json')
-    wsdlDefinition: {
-    }
+  
   }
 }

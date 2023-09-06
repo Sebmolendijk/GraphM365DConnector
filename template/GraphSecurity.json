@@ -116,11 +116,19 @@
                 "operationId": "List_incidents",
                 "parameters": [
                     {
+                        "name": "Prefer",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "include-unknown-enum-members",
+                        "x-ms-visibility": "internal"
+                    },
+                    {
                         "name": "$filter",
                         "in": "query",
                         "required": false,
                         "type": "string",
-                        "default": "status eq 'resolved'",
+                        "default": null,
                         "x-ms-visibility": "important",
                         "x-ms-summary": "Filter",
                         "description": "Filter to use when querying incidents"
@@ -228,6 +236,14 @@
                         "type": "string",
                         "x-ms-visibility": "important",
                         "x-ms-summary": "Incident ID"
+                    },
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "include-unknown-enum-members",
+                        "x-ms-visibility": "internal"
                     }
                 ]
             },
@@ -250,6 +266,14 @@
                         "type": "string",
                         "x-ms-visibility": "important",
                         "x-ms-summary": "Incident ID"
+                    },
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "include-unknown-enum-members",
+                        "x-ms-visibility": "internal"
                     },
                     {
                         "name": "body",
@@ -716,12 +740,18 @@
                         "required": true,
                         "type": "string",
                         "x-ms-summary": "Incident ID"
+                    },
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "include-unknown-enum-members",
+                        "x-ms-visibility": "internal"
                     }
                 ]
             }
         },
-        "/beta/security/incidents/2074": {},
-        "/beta/security/incidents/2014/comments": {},
         "/beta/security/incidents/{IncidentId}/comments": {
             "post": {
                 "responses": {
@@ -743,6 +773,14 @@
                         "description": "Incident ID",
                         "x-ms-summary": "Incident ID",
                         "x-ms-visibility": "important"
+                    },
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "include-unknown-enum-members",
+                        "x-ms-visibility": "internal"
                     },
                     {
                         "name": "body",
@@ -969,6 +1007,14 @@
                         "x-ms-summary": "Filter",
                         "description": "Filter when querying alerts",
                         "x-ms-visibility": "important"
+                    },
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "include-unknown-enum-members",
+                        "x-ms-visibility": "internal"
                     }
                 ]
             }
@@ -1122,6 +1168,14 @@
                         "description": "Alert ID",
                         "x-ms-summary": "Alert ID",
                         "x-ms-visibility": "important"
+                    },
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "include-unknown-enum-members",
+                        "x-ms-visibility": "internal"
                     }
                 ]
             },
@@ -1145,6 +1199,14 @@
                         "x-ms-visibility": "important",
                         "description": "Alert ID",
                         "x-ms-summary": "Alert ID"
+                    },
+                    {
+                        "name": "Prefer",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "include-unknown-enum-members",
+                        "x-ms-visibility": "internal"
                     },
                     {
                         "name": "body",
@@ -1235,6 +1297,14 @@
                         "x-ms-visibility": "important"
                     },
                     {
+                        "name": "Prefer",
+                        "in": "header",
+                        "required": true,
+                        "type": "string",
+                        "default": "include-unknown-enum-members",
+                        "x-ms-visibility": "internal"
+                    },
+                    {
                         "name": "body",
                         "in": "body",
                         "required": false,
@@ -1272,9 +1342,9 @@
         "oauth2-auth": {
             "type": "oauth2",
             "flow": "accessCode",
-            "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize",
             "tokenUrl": "https://login.windows.net/common/oauth2/authorize",
-            "scopes": {}
+            "scopes": {},
+            "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
         }
     },
     "security": [
