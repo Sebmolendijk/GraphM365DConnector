@@ -1,9 +1,0 @@
-{
-  "connectorId": "shared_microsoft-20365-20defender-5fa9c9036544561c05-5f5a975189eb5d8b63",
-  "environment": "Default-7f786800-3ced-4461-ab95-c92b245fe877",
-  "apiProperties": "apiProperties.json",
-  "apiDefinition": "apiDefinition.swagger.json",
-  "icon": "icon.png",
-  "powerAppsUrl": "https://api.powerapps.com",
-  "powerAppsApiVersion": "2016-11-01"
-}
