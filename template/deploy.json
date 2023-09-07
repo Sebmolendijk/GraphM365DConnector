@@ -1,0 +1,1403 @@
+{
+  "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+  "contentVersion": "1.0.0.0",
+  "metadata": {
+    "_generator": {
+      "name": "bicep",
+      "version": "0.10.61.36676",
+      "templateHash": "17429521129706936068"
+    }
+  },
+  "parameters": {
+    "name": {
+      "type": "string",
+      "defaultValue": "GraphSecurity"
+    },
+    "location": {
+      "type": "string",
+      "defaultValue": "[resourceGroup().location]"
+    },
+    "icon": {
+      "type": "string",
+      "defaultValue": "data:image/png;base64,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"
+    }
+  },
+  "variables": {
+    "$fxv#0": {
+      "swagger": "2.0",
+      "info": {
+        "title": "Default title",
+        "description": "Retrieve Microsoft Security Incidents",
+        "version": "1.0"
+      },
+      "host": "graph.microsoft.com",
+      "basePath": "/",
+      "schemes": [
+        "https"
+      ],
+      "consumes": [],
+      "produces": [],
+      "paths": {
+        "/beta/security/incidents": {
+          "get": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "id"
+                          },
+                          "tenantId": {
+                            "type": "string",
+                            "description": "tenantId"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "status"
+                          },
+                          "incidentWebUrl": {
+                            "type": "string",
+                            "description": "incidentWebUrl"
+                          },
+                          "redirectIncidentId": {
+                            "type": "string",
+                            "description": "redirectIncidentId"
+                          },
+                          "displayName": {
+                            "type": "string",
+                            "description": "displayName"
+                          },
+                          "createdDateTime": {
+                            "type": "string",
+                            "description": "createdDateTime"
+                          },
+                          "lastUpdateDateTime": {
+                            "type": "string",
+                            "description": "lastUpdateDateTime"
+                          },
+                          "assignedTo": {
+                            "type": "string",
+                            "description": "assignedTo"
+                          },
+                          "classification": {
+                            "type": "string",
+                            "description": "classification"
+                          },
+                          "determination": {
+                            "type": "string",
+                            "description": "determination"
+                          },
+                          "severity": {
+                            "type": "string",
+                            "description": "severity"
+                          },
+                          "customTags": {
+                            "type": "array",
+                            "items": {},
+                            "description": "customTags"
+                          },
+                          "systemTags": {
+                            "type": "array",
+                            "items": {},
+                            "description": "systemTags"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "description"
+                          },
+                          "recommendedActions": {
+                            "type": "string",
+                            "description": "recommendedActions"
+                          },
+                          "comments": {
+                            "type": "array",
+                            "items": {},
+                            "description": "comments"
+                          },
+                          "recommendedHuntingQueries": {
+                            "type": "array",
+                            "items": {},
+                            "description": "recommendedHuntingQueries"
+                          }
+                        }
+                      },
+                      "description": "value"
+                    }
+                  }
+                }
+              }
+            },
+            "summary": "List incidents",
+            "description": "List security incidents",
+            "x-ms-visibility": "important",
+            "operationId": "List_incidents",
+            "parameters": [
+              {
+                "name": "Prefer",
+                "in": "header",
+                "required": true,
+                "type": "string",
+                "default": "include-unknown-enum-members",
+                "x-ms-visibility": "internal"
+              },
+              {
+                "name": "$filter",
+                "in": "query",
+                "required": false,
+                "type": "string",
+                "default": "[null()]",
+                "x-ms-visibility": "important",
+                "x-ms-summary": "Filter",
+                "description": "Filter to use when querying incidents"
+              }
+            ]
+          }
+        },
+        "/beta/security/incidents/{IncidentId}": {
+          "get": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "id"
+                    },
+                    "tenantId": {
+                      "type": "string",
+                      "description": "tenantId"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "status"
+                    },
+                    "incidentWebUrl": {
+                      "type": "string",
+                      "description": "incidentWebUrl"
+                    },
+                    "redirectIncidentId": {
+                      "type": "string",
+                      "description": "redirectIncidentId"
+                    },
+                    "displayName": {
+                      "type": "string",
+                      "description": "displayName"
+                    },
+                    "createdDateTime": {
+                      "type": "string",
+                      "description": "createdDateTime"
+                    },
+                    "lastUpdateDateTime": {
+                      "type": "string",
+                      "description": "lastUpdateDateTime"
+                    },
+                    "assignedTo": {
+                      "type": "string",
+                      "description": "assignedTo"
+                    },
+                    "classification": {
+                      "type": "string",
+                      "description": "classification"
+                    },
+                    "determination": {
+                      "type": "string",
+                      "description": "determination"
+                    },
+                    "severity": {
+                      "type": "string",
+                      "description": "severity"
+                    },
+                    "customTags": {
+                      "type": "array",
+                      "items": {},
+                      "description": "customTags"
+                    },
+                    "systemTags": {
+                      "type": "array",
+                      "items": {},
+                      "description": "systemTags"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "description"
+                    },
+                    "recommendedActions": {
+                      "type": "string",
+                      "description": "recommendedActions"
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {},
+                      "description": "comments"
+                    },
+                    "recommendedHuntingQueries": {
+                      "type": "array",
+                      "items": {},
+                      "description": "recommendedHuntingQueries"
+                    }
+                  }
+                }
+              }
+            },
+            "summary": "Get incident",
+            "description": "Return a single incident by id",
+            "operationId": "Get_incident",
+            "x-ms-visibility": "important",
+            "parameters": [
+              {
+                "name": "IncidentId",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "x-ms-visibility": "important",
+                "x-ms-summary": "Incident ID"
+              },
+              {
+                "name": "Prefer",
+                "in": "header",
+                "required": true,
+                "type": "string",
+                "default": "include-unknown-enum-members",
+                "x-ms-visibility": "internal"
+              }
+            ]
+          },
+          "patch": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {}
+              }
+            },
+            "summary": "Update incident",
+            "description": "Update an incident by id",
+            "operationId": "Update_incident",
+            "x-ms-visibility": "important",
+            "parameters": [
+              {
+                "name": "IncidentId",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "x-ms-visibility": "important",
+                "x-ms-summary": "Incident ID"
+              },
+              {
+                "name": "Prefer",
+                "in": "header",
+                "required": true,
+                "type": "string",
+                "default": "include-unknown-enum-members",
+                "x-ms-visibility": "internal"
+              },
+              {
+                "name": "body",
+                "in": "body",
+                "required": false,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "classification": {
+                      "type": "string",
+                      "description": "Incident classification",
+                      "title": "",
+                      "x-ms-visibility": "important",
+                      "x-ms-summary": "Classification",
+                      "enum": [
+                        "unknown",
+                        "falsePositive",
+                        "truePositive",
+                        "informationalExpectedActivity"
+                      ]
+                    },
+                    "determination": {
+                      "type": "string",
+                      "description": "Incident determination",
+                      "title": "determination",
+                      "enum": [
+                        "unknown",
+                        "apt",
+                        "malware",
+                        "securityPersonnel",
+                        "securityTesting",
+                        "unwantedSoftware",
+                        "other",
+                        "multiStagedAttack",
+                        "compromisedUser",
+                        "phishing",
+                        "maliciousUserActivity",
+                        "notMalicious",
+                        "notEnoughDataToValidate",
+                        "confirmedUserActivity",
+                        "lineOfBusinessApplication"
+                      ],
+                      "x-ms-visibility": "important",
+                      "x-ms-summary": "Determination"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Incident status",
+                      "title": "",
+                      "x-ms-visibility": "important",
+                      "x-ms-summary": "Status",
+                      "enum": [
+                        "active",
+                        "resolved",
+                        "redirected"
+                      ]
+                    },
+                    "assignedTo": {
+                      "type": "string",
+                      "description": "User the incident is assigned to",
+                      "title": "",
+                      "x-ms-visibility": "important",
+                      "x-ms-summary": "Assigned To"
+                    },
+                    "customTags": {
+                      "type": "array",
+                      "items": {
+                        "type": "string",
+                        "title": "Custom Tags",
+                        "x-ms-visibility": "important",
+                        "x-ms-summary": "Custom tags"
+                      },
+                      "description": "Custom tags to add to the incident"
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "/beta/security/incidents/{IncidentId}/alerts": {
+          "get": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "id"
+                          },
+                          "providerAlertId": {
+                            "type": "string",
+                            "description": "providerAlertId"
+                          },
+                          "incidentId": {
+                            "type": "string",
+                            "description": "incidentId"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "status"
+                          },
+                          "severity": {
+                            "type": "string",
+                            "description": "severity"
+                          },
+                          "classification": {
+                            "type": "string",
+                            "description": "classification"
+                          },
+                          "determination": {
+                            "type": "string",
+                            "description": "determination"
+                          },
+                          "serviceSource": {
+                            "type": "string",
+                            "description": "serviceSource"
+                          },
+                          "detectionSource": {
+                            "type": "string",
+                            "description": "detectionSource"
+                          },
+                          "detectorId": {
+                            "type": "string",
+                            "description": "detectorId"
+                          },
+                          "tenantId": {
+                            "type": "string",
+                            "description": "tenantId"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "title"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "description"
+                          },
+                          "recommendedActions": {
+                            "type": "string",
+                            "description": "recommendedActions"
+                          },
+                          "category": {
+                            "type": "string",
+                            "description": "category"
+                          },
+                          "assignedTo": {
+                            "type": "string",
+                            "description": "assignedTo"
+                          },
+                          "alertWebUrl": {
+                            "type": "string",
+                            "description": "alertWebUrl"
+                          },
+                          "incidentWebUrl": {
+                            "type": "string",
+                            "description": "incidentWebUrl"
+                          },
+                          "actorDisplayName": {
+                            "type": "string",
+                            "description": "actorDisplayName"
+                          },
+                          "threatDisplayName": {
+                            "type": "string",
+                            "description": "threatDisplayName"
+                          },
+                          "threatFamilyName": {
+                            "type": "string",
+                            "description": "threatFamilyName"
+                          },
+                          "mitreTechniques": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "mitreTechniques"
+                          },
+                          "createdDateTime": {
+                            "type": "string",
+                            "description": "createdDateTime"
+                          },
+                          "lastUpdateDateTime": {
+                            "type": "string",
+                            "description": "lastUpdateDateTime"
+                          },
+                          "resolvedDateTime": {
+                            "type": "string",
+                            "description": "resolvedDateTime"
+                          },
+                          "firstActivityDateTime": {
+                            "type": "string",
+                            "description": "firstActivityDateTime"
+                          },
+                          "lastActivityDateTime": {
+                            "type": "string",
+                            "description": "lastActivityDateTime"
+                          },
+                          "systemTags": {
+                            "type": "array",
+                            "items": {},
+                            "description": "systemTags"
+                          },
+                          "comments": {
+                            "type": "array",
+                            "items": {},
+                            "description": "comments"
+                          },
+                          "evidence": {
+                            "type": "array",
+                            "items": {
+                              "type": "object",
+                              "properties": {
+                                "@odata.type": {
+                                  "type": "string",
+                                  "description": "@odata.type"
+                                },
+                                "createdDateTime": {
+                                  "type": "string",
+                                  "description": "createdDateTime"
+                                },
+                                "verdict": {
+                                  "type": "string",
+                                  "description": "verdict"
+                                },
+                                "remediationStatus": {
+                                  "type": "string",
+                                  "description": "remediationStatus"
+                                },
+                                "remediationStatusDetails": {
+                                  "type": "string",
+                                  "description": "remediationStatusDetails"
+                                },
+                                "roles": {
+                                  "type": "array",
+                                  "items": {},
+                                  "description": "roles"
+                                },
+                                "detailedRoles": {
+                                  "type": "array",
+                                  "items": {},
+                                  "description": "detailedRoles"
+                                },
+                                "tags": {
+                                  "type": "array",
+                                  "items": {},
+                                  "description": "tags"
+                                },
+                                "primaryAddress": {
+                                  "type": "string",
+                                  "description": "primaryAddress"
+                                },
+                                "displayName": {
+                                  "type": "string",
+                                  "description": "displayName"
+                                },
+                                "userAccount": {
+                                  "type": "object",
+                                  "properties": {
+                                    "accountName": {
+                                      "type": "string",
+                                      "description": "accountName"
+                                    },
+                                    "domainName": {
+                                      "type": "string",
+                                      "description": "domainName"
+                                    },
+                                    "userSid": {
+                                      "type": "string",
+                                      "description": "userSid"
+                                    },
+                                    "azureAdUserId": {
+                                      "type": "string",
+                                      "description": "azureAdUserId"
+                                    },
+                                    "userPrincipalName": {
+                                      "type": "string",
+                                      "description": "userPrincipalName"
+                                    },
+                                    "displayName": {
+                                      "type": "string",
+                                      "description": "displayName"
+                                    }
+                                  },
+                                  "description": "userAccount"
+                                },
+                                "detectionStatus": {
+                                  "type": "string",
+                                  "description": "detectionStatus"
+                                },
+                                "mdeDeviceId": {
+                                  "type": "string",
+                                  "description": "mdeDeviceId"
+                                },
+                                "fileDetails": {
+                                  "type": "object",
+                                  "properties": {
+                                    "sha1": {
+                                      "type": "string",
+                                      "description": "sha1"
+                                    },
+                                    "sha256": {
+                                      "type": "string",
+                                      "description": "sha256"
+                                    },
+                                    "fileName": {
+                                      "type": "string",
+                                      "description": "fileName"
+                                    },
+                                    "filePath": {
+                                      "type": "string",
+                                      "description": "filePath"
+                                    },
+                                    "fileSize": {
+                                      "type": "string",
+                                      "description": "fileSize"
+                                    },
+                                    "filePublisher": {
+                                      "type": "string",
+                                      "description": "filePublisher"
+                                    },
+                                    "signer": {
+                                      "type": "string",
+                                      "description": "signer"
+                                    },
+                                    "issuer": {
+                                      "type": "string",
+                                      "description": "issuer"
+                                    }
+                                  },
+                                  "description": "fileDetails"
+                                },
+                                "networkMessageId": {
+                                  "type": "string",
+                                  "description": "networkMessageId"
+                                },
+                                "internetMessageId": {
+                                  "type": "string",
+                                  "description": "internetMessageId"
+                                },
+                                "subject": {
+                                  "type": "string",
+                                  "description": "subject"
+                                },
+                                "language": {
+                                  "type": "string",
+                                  "description": "language"
+                                },
+                                "senderIp": {
+                                  "type": "string",
+                                  "description": "senderIp"
+                                },
+                                "recipientEmailAddress": {
+                                  "type": "string",
+                                  "description": "recipientEmailAddress"
+                                },
+                                "antiSpamDirection": {
+                                  "type": "string",
+                                  "description": "antiSpamDirection"
+                                },
+                                "deliveryAction": {
+                                  "type": "string",
+                                  "description": "deliveryAction"
+                                },
+                                "deliveryLocation": {
+                                  "type": "string",
+                                  "description": "deliveryLocation"
+                                },
+                                "urn": {
+                                  "type": "string",
+                                  "description": "urn"
+                                },
+                                "threats": {
+                                  "type": "array",
+                                  "items": {},
+                                  "description": "threats"
+                                },
+                                "threatDetectionMethods": {
+                                  "type": "array",
+                                  "items": {},
+                                  "description": "threatDetectionMethods"
+                                },
+                                "urls": {
+                                  "type": "array",
+                                  "items": {},
+                                  "description": "urls"
+                                },
+                                "urlCount": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "urlCount"
+                                },
+                                "attachmentsCount": {
+                                  "type": "integer",
+                                  "format": "int32",
+                                  "description": "attachmentsCount"
+                                },
+                                "receivedDateTime": {
+                                  "type": "string",
+                                  "description": "receivedDateTime"
+                                },
+                                "p1Sender": {
+                                  "type": "object",
+                                  "properties": {
+                                    "emailAddress": {
+                                      "type": "string",
+                                      "description": "emailAddress"
+                                    },
+                                    "displayName": {
+                                      "type": "string",
+                                      "description": "displayName"
+                                    },
+                                    "domainName": {
+                                      "type": "string",
+                                      "description": "domainName"
+                                    }
+                                  },
+                                  "description": "p1Sender"
+                                },
+                                "p2Sender": {
+                                  "type": "object",
+                                  "properties": {
+                                    "emailAddress": {
+                                      "type": "string",
+                                      "description": "emailAddress"
+                                    },
+                                    "displayName": {
+                                      "type": "string",
+                                      "description": "displayName"
+                                    },
+                                    "domainName": {
+                                      "type": "string",
+                                      "description": "domainName"
+                                    }
+                                  },
+                                  "description": "p2Sender"
+                                }
+                              }
+                            },
+                            "description": "evidence"
+                          }
+                        }
+                      },
+                      "description": "value"
+                    }
+                  }
+                }
+              }
+            },
+            "summary": "Get incident alerts",
+            "description": "Returns alerts from a specific incident",
+            "operationId": "Get_incident_alerts",
+            "x-ms-visibility": "important",
+            "parameters": [
+              {
+                "name": "IncidentId",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "x-ms-summary": "Incident ID"
+              },
+              {
+                "name": "Prefer",
+                "in": "header",
+                "required": true,
+                "type": "string",
+                "default": "include-unknown-enum-members",
+                "x-ms-visibility": "internal"
+              }
+            ]
+          }
+        },
+        "/beta/security/incidents/{IncidentId}/comments": {
+          "post": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {}
+              }
+            },
+            "summary": "Add incident comment",
+            "operationId": "Add_incident_comment",
+            "description": "Add a comment to an incident, based on the specified incident id",
+            "x-ms-visibility": "important",
+            "parameters": [
+              {
+                "name": "IncidentId",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "description": "Incident ID",
+                "x-ms-summary": "Incident ID",
+                "x-ms-visibility": "important"
+              },
+              {
+                "name": "Prefer",
+                "in": "header",
+                "required": true,
+                "type": "string",
+                "default": "include-unknown-enum-members",
+                "x-ms-visibility": "internal"
+              },
+              {
+                "name": "body",
+                "in": "body",
+                "required": false,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "@odata.type": {
+                      "type": "string",
+                      "description": "@odata.type",
+                      "title": "",
+                      "x-ms-visibility": "internal",
+                      "default": "microsoft.graph.security.alertComment"
+                    },
+                    "comment": {
+                      "type": "string",
+                      "description": "Comment to add",
+                      "title": "Comment",
+                      "x-ms-visibility": "important"
+                    }
+                  },
+                  "required": [
+                    "@odata.type",
+                    "comment"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "/beta/security/runHuntingQuery": {
+          "post": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {}
+              }
+            },
+            "summary": "Run hunting query",
+            "description": "Run an Advanced Hunting query",
+            "operationId": "Run_advanced_hunting_query",
+            "x-ms-visibility": "important",
+            "parameters": [
+              {
+                "name": "body",
+                "in": "body",
+                "required": false,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "query": {
+                      "type": "string",
+                      "description": "Advanced Hunting query",
+                      "title": "Query",
+                      "x-ms-visibility": "important"
+                    }
+                  },
+                  "required": [
+                    "query"
+                  ]
+                }
+              }
+            ]
+          }
+        },
+        "/beta/security/alerts_v2": {
+          "get": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "value": {
+                      "type": "array",
+                      "items": {
+                        "type": "object",
+                        "properties": {
+                          "id": {
+                            "type": "string",
+                            "description": "id"
+                          },
+                          "providerAlertId": {
+                            "type": "string",
+                            "description": "providerAlertId"
+                          },
+                          "incidentId": {
+                            "type": "string",
+                            "description": "incidentId"
+                          },
+                          "status": {
+                            "type": "string",
+                            "description": "status"
+                          },
+                          "severity": {
+                            "type": "string",
+                            "description": "severity"
+                          },
+                          "classification": {
+                            "type": "string",
+                            "description": "classification"
+                          },
+                          "determination": {
+                            "type": "string",
+                            "description": "determination"
+                          },
+                          "serviceSource": {
+                            "type": "string",
+                            "description": "serviceSource"
+                          },
+                          "detectionSource": {
+                            "type": "string",
+                            "description": "detectionSource"
+                          },
+                          "detectorId": {
+                            "type": "string",
+                            "description": "detectorId"
+                          },
+                          "tenantId": {
+                            "type": "string",
+                            "description": "tenantId"
+                          },
+                          "title": {
+                            "type": "string",
+                            "description": "title"
+                          },
+                          "description": {
+                            "type": "string",
+                            "description": "description"
+                          },
+                          "recommendedActions": {
+                            "type": "string",
+                            "description": "recommendedActions"
+                          },
+                          "category": {
+                            "type": "string",
+                            "description": "category"
+                          },
+                          "assignedTo": {
+                            "type": "string",
+                            "description": "assignedTo"
+                          },
+                          "alertWebUrl": {
+                            "type": "string",
+                            "description": "alertWebUrl"
+                          },
+                          "incidentWebUrl": {
+                            "type": "string",
+                            "description": "incidentWebUrl"
+                          },
+                          "actorDisplayName": {
+                            "type": "string",
+                            "description": "actorDisplayName"
+                          },
+                          "threatDisplayName": {
+                            "type": "string",
+                            "description": "threatDisplayName"
+                          },
+                          "threatFamilyName": {
+                            "type": "string",
+                            "description": "threatFamilyName"
+                          },
+                          "mitreTechniques": {
+                            "type": "array",
+                            "items": {
+                              "type": "string"
+                            },
+                            "description": "mitreTechniques"
+                          },
+                          "createdDateTime": {
+                            "type": "string",
+                            "description": "createdDateTime"
+                          },
+                          "lastUpdateDateTime": {
+                            "type": "string",
+                            "description": "lastUpdateDateTime"
+                          },
+                          "resolvedDateTime": {
+                            "type": "string",
+                            "description": "resolvedDateTime"
+                          },
+                          "firstActivityDateTime": {
+                            "type": "string",
+                            "description": "firstActivityDateTime"
+                          },
+                          "lastActivityDateTime": {
+                            "type": "string",
+                            "description": "lastActivityDateTime"
+                          },
+                          "systemTags": {
+                            "type": "array",
+                            "items": {},
+                            "description": "systemTags"
+                          },
+                          "comments": {
+                            "type": "array",
+                            "items": {},
+                            "description": "comments"
+                          },
+                          "evidence": {
+                            "type": "array",
+                            "items": {},
+                            "description": "evidence"
+                          }
+                        }
+                      },
+                      "description": "value"
+                    }
+                  }
+                }
+              }
+            },
+            "summary": "List alerts",
+            "description": "List alerts",
+            "operationId": "List_alerts",
+            "x-ms-visibility": "important",
+            "parameters": [
+              {
+                "name": "$filter",
+                "in": "query",
+                "required": false,
+                "type": "string",
+                "x-ms-summary": "Filter",
+                "description": "Filter when querying alerts",
+                "x-ms-visibility": "important"
+              },
+              {
+                "name": "Prefer",
+                "in": "header",
+                "required": true,
+                "type": "string",
+                "default": "include-unknown-enum-members",
+                "x-ms-visibility": "internal"
+              }
+            ]
+          }
+        },
+        "/beta/security/alerts_v2/{AlertId}": {
+          "get": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string",
+                      "description": "id"
+                    },
+                    "providerAlertId": {
+                      "type": "string",
+                      "description": "providerAlertId"
+                    },
+                    "incidentId": {
+                      "type": "string",
+                      "description": "incidentId"
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "status"
+                    },
+                    "severity": {
+                      "type": "string",
+                      "description": "severity"
+                    },
+                    "classification": {
+                      "type": "string",
+                      "description": "classification"
+                    },
+                    "determination": {
+                      "type": "string",
+                      "description": "determination"
+                    },
+                    "serviceSource": {
+                      "type": "string",
+                      "description": "serviceSource"
+                    },
+                    "detectionSource": {
+                      "type": "string",
+                      "description": "detectionSource"
+                    },
+                    "detectorId": {
+                      "type": "string",
+                      "description": "detectorId"
+                    },
+                    "tenantId": {
+                      "type": "string",
+                      "description": "tenantId"
+                    },
+                    "title": {
+                      "type": "string",
+                      "description": "title"
+                    },
+                    "description": {
+                      "type": "string",
+                      "description": "description"
+                    },
+                    "recommendedActions": {
+                      "type": "string",
+                      "description": "recommendedActions"
+                    },
+                    "category": {
+                      "type": "string",
+                      "description": "category"
+                    },
+                    "assignedTo": {
+                      "type": "string",
+                      "description": "assignedTo"
+                    },
+                    "alertWebUrl": {
+                      "type": "string",
+                      "description": "alertWebUrl"
+                    },
+                    "incidentWebUrl": {
+                      "type": "string",
+                      "description": "incidentWebUrl"
+                    },
+                    "actorDisplayName": {
+                      "type": "string",
+                      "description": "actorDisplayName"
+                    },
+                    "threatDisplayName": {
+                      "type": "string",
+                      "description": "threatDisplayName"
+                    },
+                    "threatFamilyName": {
+                      "type": "string",
+                      "description": "threatFamilyName"
+                    },
+                    "mitreTechniques": {
+                      "type": "array",
+                      "items": {},
+                      "description": "mitreTechniques"
+                    },
+                    "createdDateTime": {
+                      "type": "string",
+                      "description": "createdDateTime"
+                    },
+                    "lastUpdateDateTime": {
+                      "type": "string",
+                      "description": "lastUpdateDateTime"
+                    },
+                    "resolvedDateTime": {
+                      "type": "string",
+                      "description": "resolvedDateTime"
+                    },
+                    "firstActivityDateTime": {
+                      "type": "string",
+                      "description": "firstActivityDateTime"
+                    },
+                    "lastActivityDateTime": {
+                      "type": "string",
+                      "description": "lastActivityDateTime"
+                    },
+                    "systemTags": {
+                      "type": "array",
+                      "items": {},
+                      "description": "systemTags"
+                    },
+                    "comments": {
+                      "type": "array",
+                      "items": {},
+                      "description": "comments"
+                    },
+                    "evidence": {
+                      "type": "array",
+                      "items": {},
+                      "description": "evidence"
+                    }
+                  }
+                }
+              }
+            },
+            "summary": "Get alert",
+            "description": "Get an alert by id",
+            "operationId": "Get_alert",
+            "x-ms-visibility": "important",
+            "parameters": [
+              {
+                "name": "AlertId",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "description": "Alert ID",
+                "x-ms-summary": "Alert ID",
+                "x-ms-visibility": "important"
+              },
+              {
+                "name": "Prefer",
+                "in": "header",
+                "required": true,
+                "type": "string",
+                "default": "include-unknown-enum-members",
+                "x-ms-visibility": "internal"
+              }
+            ]
+          },
+          "patch": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {}
+              }
+            },
+            "summary": "Update alert",
+            "description": "Update an alert by id",
+            "operationId": "Update_alert",
+            "x-ms-visibility": "important",
+            "parameters": [
+              {
+                "name": "AlertId",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "x-ms-visibility": "important",
+                "description": "Alert ID",
+                "x-ms-summary": "Alert ID"
+              },
+              {
+                "name": "Prefer",
+                "in": "header",
+                "required": true,
+                "type": "string",
+                "default": "include-unknown-enum-members",
+                "x-ms-visibility": "internal"
+              },
+              {
+                "name": "body",
+                "in": "body",
+                "required": false,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "assignedTo": {
+                      "type": "string",
+                      "description": "Assigned To",
+                      "title": "Assigned To",
+                      "x-ms-visibility": "important"
+                    },
+                    "classification": {
+                      "type": "string",
+                      "description": "Classification",
+                      "title": "Classification",
+                      "x-ms-visibility": "important",
+                      "enum": [
+                        "unknown",
+                        "falsePositive",
+                        "truePositive",
+                        "informationalExpectedActivity"
+                      ]
+                    },
+                    "determination": {
+                      "type": "string",
+                      "description": "Determination",
+                      "title": "Determination",
+                      "x-ms-visibility": "important",
+                      "enum": [
+                        "unknown",
+                        "apt",
+                        "malware",
+                        "securityPersonnel",
+                        "securityTesting",
+                        "unwantedSoftware",
+                        "other",
+                        "multiStagedAttack",
+                        "compromisedUser",
+                        "phishing",
+                        "maliciousUserActivity",
+                        "clean",
+                        "insufficientData",
+                        "confirmedUserActivity",
+                        "lineOfBusinessApplication"
+                      ]
+                    },
+                    "status": {
+                      "type": "string",
+                      "description": "Status",
+                      "title": "Status",
+                      "x-ms-visibility": "important",
+                      "enum": [
+                        "new",
+                        "inProgress",
+                        "resolved",
+                        "unknownFutureValue"
+                      ]
+                    }
+                  }
+                }
+              }
+            ]
+          }
+        },
+        "/beta/security/alerts_v2/{AlertId}/comments": {
+          "post": {
+            "responses": {
+              "default": {
+                "description": "default",
+                "schema": {}
+              }
+            },
+            "summary": "Add alert comment",
+            "description": "Add a comment to an alert, based on the specified alert id",
+            "operationId": "Add_alert_comment",
+            "x-ms-visibility": "important",
+            "parameters": [
+              {
+                "name": "AlertId",
+                "in": "path",
+                "required": true,
+                "type": "string",
+                "x-ms-summary": "Alert ID",
+                "description": "Alert ID",
+                "x-ms-visibility": "important"
+              },
+              {
+                "name": "Prefer",
+                "in": "header",
+                "required": true,
+                "type": "string",
+                "default": "include-unknown-enum-members",
+                "x-ms-visibility": "internal"
+              },
+              {
+                "name": "body",
+                "in": "body",
+                "required": false,
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "@odata.type": {
+                      "type": "string",
+                      "description": "@odata.type",
+                      "title": "",
+                      "x-ms-visibility": "internal",
+                      "default": "microsoft.graph.security.alertComment"
+                    },
+                    "comment": {
+                      "type": "string",
+                      "description": "Alert comment to add",
+                      "title": "Comment",
+                      "x-ms-visibility": "important"
+                    }
+                  },
+                  "required": [
+                    "@odata.type",
+                    "comment"
+                  ]
+                }
+              }
+            ]
+          }
+        }
+      },
+      "definitions": {},
+      "parameters": {},
+      "responses": {},
+      "securityDefinitions": {
+        "oauth2-auth": {
+          "type": "oauth2",
+          "flow": "accessCode",
+          "tokenUrl": "https://login.windows.net/common/oauth2/authorize",
+          "scopes": {},
+          "authorizationUrl": "https://login.microsoftonline.com/common/oauth2/authorize"
+        }
+      },
+      "security": [
+        {
+          "oauth2-auth": []
+        }
+      ],
+      "tags": []
+    }
+  },
+  "resources": [
+    {
+      "type": "Microsoft.Web/customApis",
+      "apiVersion": "2016-06-01",
+      "name": "[parameters('name')]",
+      "location": "[parameters('location')]",
+      "tags": {},
+      "properties": {
+        "apiType": "Rest",
+        "backendService": {
+          "serviceUrl": "https://graph.microsoft.com"
+        },
+        "connectionParameters": {},
+        "description": "Connector used to interact with Microsoft Graph Security API.",
+        "displayName": "GraphSecurity",
+        "iconUri": "[parameters('icon')]",
+        "swagger": "[variables('$fxv#0')]"
+      }
+    }
+  ]
+}
