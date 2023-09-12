@@ -97,7 +97,6 @@ paths:
           in: query
           required: false
           type: string
-          default: null
           x-ms-visibility: important
           x-ms-summary: Filter
           description: Filter to use when querying incidents
