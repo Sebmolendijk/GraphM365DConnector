@@ -128,10 +128,36 @@
                         "in": "query",
                         "required": false,
                         "type": "string",
-                        "default": null,
                         "x-ms-visibility": "important",
                         "x-ms-summary": "Filter",
                         "description": "Filter to use when querying incidents"
+                    },
+                    {
+                        "name": "$orderby",
+                        "in": "query",
+                        "required": false,
+                        "type": "string",
+                        "x-ms-visibility": "important",
+                        "x-ms-summary": "OrderBy",
+                        "description": "Specify the property to use for ordering the response"
+                    },
+                    {
+                        "name": "$skip",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "x-ms-visibility": "important",
+                        "x-ms-summary": "Skip",
+                        "description": "Number of incidents to skip"
+                    },
+                    {
+                        "name": "$top",
+                        "in": "query",
+                        "required": false,
+                        "type": "integer",
+                        "x-ms-visibility": "important",
+                        "x-ms-summary": "Top",
+                        "description": "Number of incidents to return"
                     }
                 ]
             }

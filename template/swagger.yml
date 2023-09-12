@@ -101,6 +101,20 @@ paths:
           x-ms-visibility: important
           x-ms-summary: Filter
           description: Filter to use when querying incidents
+        - name: $orderby
+          in: query
+          required: false
+          type: string
+          x-ms-visibility: important
+          x-ms-summary: OrderBy
+          description: Specify the property to use for ordering the response
+        - name: $skip
+          in: query
+          required: false
+          type: integer
+          x-ms-summary: Skip
+          x-ms-visibility: important
+          description: Number of incidents to skip
   /beta/security/incidents/{IncidentId}:
     get:
       responses:
