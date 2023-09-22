@@ -1,0 +1,100 @@
+{
+    "blocks": [
+        {
+            "text": {
+                "emoji": true,
+                "text": "New incident: @{body('Get_incident')?['id']} - @{body('Get_incident')?['displayName']}",
+                "type": "plain_text"
+            },
+            "type": "header"
+        },
+        {
+            "fields": [
+                {
+                    "text": "*Created Time:*\n@{body('Get_incident')?['createdDateTime']}",
+                    "type": "mrkdwn"
+                },
+                {
+                    "text": "*Severity:*\n@{body('Get_incident')?['severity']}",
+                    "type": "mrkdwn"
+                },
+                {
+                    "text": "*Status:*\n@{body('Get_incident')?['status']}",
+                    "type": "mrkdwn"
+                },
+                {
+                    "text": "*Assigned To:*\n@{body('Get_incident')?['assignedTo']}",
+                    "type": "mrkdwn"
+                }
+            ],
+            "type": "section"
+        },
+        {
+            "fields": [
+                {
+                    "text": "*Determination:*\n@{body('Get_incident')?['determination']}",
+                    "type": "mrkdwn"
+                },
+                {
+                    "text": "*Classification:*\n@{body('Get_incident')?['classification']}",
+                    "type": "mrkdwn"
+                },
+                {
+                    "text": "*System Tags:*\n@{body('Get_incident')?['systemTags']}",
+                    "type": "mrkdwn"
+                },
+                {
+                    "text": "*Custom Tags:*\n@{body('Get_incident')?['customTags']}",
+                    "type": "mrkdwn"
+                }
+            ],
+            "type": "section"
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "fields": [
+                {
+                    "text": "*Description:*\n@{body('Get_incident')?['description']}",
+                    "type": "mrkdwn"
+                }
+            ],
+            "type": "section"
+        },
+        {
+            "fields": [
+                {
+                    "text": "*Recommended Hunting Queries:*\n@{body('Get_incident')?['recommendedHuntingQueries']?['kqlText']}",
+                    "type": "mrkdwn"
+                }
+            ],
+            "type": "section"
+        },
+        {
+            "elements": [
+                {
+                    "style": "primary",
+                    "text": {
+                        "emoji": true,
+                        "text": "Resolve",
+                        "type": "plain_text"
+                    },
+                    "type": "button",
+                    "value": "click_me_123"
+                },
+                {
+                    "style": "danger",
+                    "text": {
+                        "emoji": true,
+                        "text": "Reject",
+                        "type": "plain_text"
+                    },
+                    "type": "button",
+                    "value": "click_me_123"
+                }
+            ],
+            "type": "actions"
+        }
+    ]
+}
