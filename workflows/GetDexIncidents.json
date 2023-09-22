@@ -80,12 +80,25 @@
             },
             "Until_no_more_incidents": {
               "actions": {
-                "Compose": {
-                  "runAfter": {
-                    "If_more_incidents": ["Succeeded"]
-                  },
-                  "type": "Compose",
-                  "inputs": "DEX incidents: @{length(body('Filter_DEX_incidents'))}"
+                "List_incidents": {
+                  "runAfter": {},
+                  "type": "ApiConnection",
+                  "inputs": {
+                    "headers": {
+                      "Prefer": "include-unknown-enum-members"
+                    },
+                    "host": {
+                      "connection": {
+                        "name": "@parameters('$connections')['GraphSecurity']['connectionId']"
+                      }
+                    },
+                    "method": "get",
+                    "path": "/beta/security/incidents",
+                    "queries": {
+                      "$filter": "createdDateTime gt @{addDays(utcNow(), variables('days'))}",
+                      "$skip": "@variables('skip')"
+                    }
+                  }
                 },
                 "Filter_DEX_incidents": {
                   "runAfter": {
@@ -129,25 +142,12 @@
                   },
                   "type": "If"
                 },
-                "List_incidents": {
-                  "runAfter": {},
-                  "type": "ApiConnection",
-                  "inputs": {
-                    "headers": {
-                      "Prefer": "include-unknown-enum-members"
-                    },
-                    "host": {
-                      "connection": {
-                        "name": "@parameters('$connections')['GraphSecurity']['connectionId']"
-                      }
-                    },
-                    "method": "get",
-                    "path": "/beta/security/incidents",
-                    "queries": {
-                      "$filter": "createdDateTime gt @{addDays(utcNow(), variables('days'))}",
-                      "$skip": "@variables('skip')"
-                    }
-                  }
+                "Compose": {
+                  "runAfter": {
+                    "If_more_incidents": ["Succeeded"]
+                  },
+                  "type": "Compose",
+                  "inputs": "DEX incidents: @{length(body('Filter_DEX_incidents'))}"
                 }
               },
               "runAfter": {
