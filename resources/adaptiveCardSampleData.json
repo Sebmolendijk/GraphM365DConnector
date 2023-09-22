@@ -1,0 +1,31 @@
+{
+    "title": "13256 - Multi-stage incident involving Initial access & Collection on one endpoint",
+    "status": "New",
+    "severity": "High",
+    "assignedTo": "seb@ninja.com",
+    "determination": "malware",
+    "classification": "truePositive",
+    "createdDateTime": "2017-02-14T06:08:39Z",
+    "description": "Microsoft have observed potential domain controller compromise in your environment.The event started on May 3rd 2023 when the user kdickens[@]seccxp[.]ninja received an email from the sender fred.huckaby[@]woodgrove-bank[.]com. The email contained a malicious URL http[:]//3pik7o60[.]mycompanyportal[.]xyz/Fezrnzrb_6btm8-0afl16g38obq24m  Post the user visiting the URL, we have seen multiple system discovery activities targeting for credential theft and information gathering on the device workstation6.seccxp.ninja. We have also observed execution of mimikatz scripts on the device workstation6.seccxp.ninja by the user kdickens[@]seccxp[.]ninja. Attacker (via kdickens[@]seccxp[.]ninja.) launched a “DCSync” attack on the DC server DC02 using the stolen credential of the user Gustovo Pedro from the host workstation6.seccxp.ninja. Once the DCsync attack was successful, the attacker gained credential access to the account ContosoADFSAdmin on the host adfs01.seccxp.ninja.  To attain persistence, the attacker created and launched a scheduled task on adfs01.seccxp.ninja with name as ljqoyy2i (zmk.exe). In addition, the ADFS private keys are also compromised by the attacker via ContosoADFSadmin account on the host adfs01.seccxp.ninja. The above attack behavior appears to be inline with the threat actor NOBELIUM. The actor that Microsoft tracks as Midnight Blizzard (NOBELIUM) is a Russia-based threat actor attributed by the US and UK governments as the Foreign Intelligence Service of the Russian Federation, also known as the SVR. Midnight Blizzard (NOBELIUM) is known to primarily target governments, diplomatic entities, NGOs, and IT service providers in primarily the US and Europe. Their focus is to collect intelligence through longstanding and dedicated espionage of foreign interests that can be traced to early 2018 by leveraging the use of identity. Midnight Blizzard (NOBELIUM) is consistent and persistent in their operational targeting and their objectives rarely change. They utilize diverse initial access methods ranging from stolen credentials to supply chain attacks, exploitation of on-premises environments to laterally move to the cloud, exploitation of service providers’ trust chain to gain access to downstream customers, as well as the ADFS malware known as FOGGYWEB and MAGICWEB. Midnight Blizzard (NOBELIUM) is tracked by partner security companies as APT29, UNC2452, and Cozy Bear. ",
+    "recommendedActions": "Microsoft have observed potential domain controller compromise in your environment.The event started on May 3rd 2023 when the user kdickens[@]seccxp[.]ninja received an email from the sender fred.huckaby[@]woodgrove-bank[.]com. The email contained a malicious URL http[:]//3pik7o60[.]mycompanyportal[.]xyz/Fezrnzrb_6btm8-0afl16g38obq24m  Post the user visiting the URL, we have seen multiple system discovery activities targeting for credential theft and information gathering on the device workstation6.seccxp.ninja. We have also observed execution of mimikatz scripts on the device workstation6.seccxp.ninja by the user kdickens[@]seccxp[.]ninja. Attacker (via kdickens[@]seccxp[.]ninja.) launched a “DCSync” attack on the DC server DC02 using the stolen credential of the user Gustovo Pedro from the host workstation6.seccxp.ninja. Once the DCsync attack was successful, the attacker gained credential access to the account ContosoADFSAdmin on the host adfs01.seccxp.ninja.  To attain persistence, the attacker created and launched a scheduled task on adfs01.seccxp.ninja with name as ljqoyy2i (zmk.exe). In addition, the ADFS private keys are also compromised by the attacker via ContosoADFSadmin account on the host adfs01.seccxp.ninja. The above attack behavior appears to be inline with the threat actor NOBELIUM. The actor that Microsoft tracks as Midnight Blizzard (NOBELIUM) is a Russia-based threat actor attributed by the US and UK governments as the Foreign Intelligence Service of the Russian Federation, also known as the SVR. Midnight Blizzard (NOBELIUM) is known to primarily target governments, diplomatic entities, NGOs, and IT service providers in primarily the US and Europe. Their focus is to collect intelligence through longstanding and dedicated espionage of foreign interests that can be traced to early 2018 by leveraging the use of identity. Midnight Blizzard (NOBELIUM) is consistent and persistent in their operational targeting and their objectives rarely change. They utilize diverse initial access methods ranging from stolen credentials to supply chain attacks, exploitation of on-premises environments to laterally move to the cloud, exploitation of service providers’ trust chain to gain access to downstream customers, as well as the ADFS malware known as FOGGYWEB and MAGICWEB. Midnight Blizzard (NOBELIUM) is tracked by partner security companies as APT29, UNC2452, and Cozy Bear. ",
+    "viewUrl": "https://adaptivecards.io",
+    "kql": "EmailEvents | where NetworkMessageId == \"98678783-45e8-4d7b-fa24-08db4b83723c\"",
+    "properties": [
+        {
+            "key": "Board",
+            "value": "Adaptive Cards"
+        },
+        {
+            "key": "List",
+            "value": "Backlog"
+        },
+        {
+            "key": "Assigned to",
+            "value": "Matt Hidinger"
+        },
+        {
+            "key": "Due date",
+            "value": "Not set"
+        }
+    ]
+}

@@ -1,0 +1,158 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Compose_message": {
+                "actions": {
+                    "Compose_Outlook_message": {
+                        "inputs": "<p>\n<b>Created Time</b>: @{body('Get_incident')?['createdDateTime']}\n<br><b>Severity</b>: @{body('Get_incident')?['severity']}\n<br><b>Status</b>: @{body('Get_incident')?['status']}\n<br><b>Assigned To</b>: @{body('Get_incident')?['assignedTo']}\n<br><b>Link to portal</b>: @{body('Get_incident')?['incidentWebUrl']}\n</p>\n\n<p>\n<br><b>Determination</b>: @{body('Get_incident')?['determination']}\n<br><b>Classification</b>: @{body('Get_incident')?['classification']}\n<br><b>System Tags</b>: @{body('Get_incident')?['systemTags']}\n<br><b>Custom Tags</b>: @{body('Get_incident')?['customTags']}\n</p>\n\n<p>\n<br><b>Description</b>: <br>@{body('Get_incident')?['description']}\n</p>\n\n<p>\n<br><b>Recommended Actions</b>: <br>@{body('Get_incident')?['recommendedActions']}\n</p>\n\n<p>\n<br><b>Recommended Hunting Queries</b>: <br>@{variables('kqlQueries')}\n</p>\n",
+                        "runAfter": {
+                            "If_KQL_queries": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Compose"
+                    },
+                    "If_KQL_queries": {
+                        "actions": {
+                            "For_each_query": {
+                                "actions": {
+                                    "Append_to_string_variable": {
+                                        "inputs": {
+                                            "name": "kqlQueries",
+                                            "value": "@items('For_each_query')?['kqlText']"
+                                        },
+                                        "runAfter": {},
+                                        "type": "AppendToStringVariable"
+                                    }
+                                },
+                                "foreach": "@body('Get_incident')?['recommendedHuntingQueries']",
+                                "runAfter": {},
+                                "type": "Foreach"
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "equals": [
+                                        "@empty(body('Get_incident')?['recommendedHuntingQueries'])",
+                                        "@false"
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {},
+                        "type": "If"
+                    }
+                },
+                "runAfter": {
+                    "Get_incident": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Scope"
+            },
+            "Get_incident": {
+                "inputs": {
+                    "headers": {
+                        "Prefer": "include-unknown-enum-members"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['GraphSecurity']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/beta/security/incidents/@{encodeURIComponent('20795')}"
+                },
+                "runAfter": {
+                    "Initialize_kqlQueries": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            },
+            "Initialize_kqlQueries": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "kqlQueries",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "type": "InitializeVariable"
+            },
+            "Send_email_with_options": {
+                "inputs": {
+                    "body": {
+                        "Message": {
+                            "Body": "@{outputs('Compose_Outlook_message')}",
+                            "HeaderText": "Incident @{body('Get_incident')?['id']} - @{body('Get_incident')?['displayName']} ",
+                            "HideHTMLMessage": false,
+                            "HideMicrosoftFooter": true,
+                            "Importance": "High",
+                            "Options": "Mark tasks as \"In progress\", Mark tasks as \"Skipped\", Mark tasks as \"Completed\"",
+                            "SelectionText": "To manage Managed Response tasks:",
+                            "ShowHTMLConfirmationDialog": false,
+                            "Subject": "New Defender Experts Managed Response",
+                            "To": "seb@seccxpninja.onmicrosoft.com",
+                            "UseOnlyHTMLMessage": true
+                        },
+                        "NotificationUrl": "@{listCallbackUrl()}"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['office365']['connectionId']"
+                        }
+                    },
+                    "path": "/mailwithoptions/$subscriptions"
+                },
+                "runAfter": {
+                    "Compose_message": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnectionWebhook"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "Recurrence": {
+                "evaluatedRecurrence": {
+                    "frequency": "Month",
+                    "interval": 3
+                },
+                "recurrence": {
+                    "frequency": "Month",
+                    "interval": 3
+                },
+                "type": "Recurrence"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "GraphSecurity": {
+                    "connectionId": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/resourceGroups/DefenderExperts/providers/Microsoft.Web/connections/GraphSecurity",
+                    "connectionName": "GraphSecurity",
+                    "id": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/resourceGroups/DefenderExperts/providers/Microsoft.Web/customApis/GraphSecurity"
+                },
+                "office365": {
+                    "connectionId": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/resourceGroups/DefenderExperts/providers/Microsoft.Web/connections/office365",
+                    "connectionName": "office365",
+                    "id": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/providers/Microsoft.Web/locations/eastus2/managedApis/office365"
+                }
+            }
+        }
+    }
+}

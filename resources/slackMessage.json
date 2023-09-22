@@ -96,7 +96,7 @@
                     "style": "primary",
                     "text": {
                         "emoji": true,
-                        "text": "Resolve",
+                        "text": "Resolve incident",
                         "type": "plain_text"
                     },
                     "type": "button",
@@ -106,7 +106,7 @@
                     "style": "danger",
                     "text": {
                         "emoji": true,
-                        "text": "Reject",
+                        "text": "Mark tasks as complete",
                         "type": "plain_text"
                     },
                     "type": "button",

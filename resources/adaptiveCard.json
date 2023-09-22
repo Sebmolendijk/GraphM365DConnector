@@ -1,0 +1,313 @@
+{
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "actions": [
+        {
+            "data": {
+                "x": "confirm"
+            },
+            "title": "Submit",
+            "type": "Action.Submit"
+        }
+    ],
+    "body": [
+        {
+            "type": "TextBlock",
+            "size": "Large",
+            "weight": "Bolder",
+            "text": "@{body('Get_incident')?['id']} - @{body('Get_incident')?['id']} - @{body('Get_incident')?['id']} - @{body('Get_incident')?['displayName']}",
+            "style": "heading",
+            "fontType": "Default",
+            "isSubtle": true,
+            "wrap": true
+        },
+        {
+            "text": "[Link to the Incident](@{body('Get_incident')?['incidentWebUrl']})",
+            "type": "TextBlock",
+            "wrap": true,
+            "style": "default",
+            "fontType": "Default",
+            "size": "Small",
+            "weight": "Bolder"
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**Created Time:**",
+                                    "wrap": true,
+                                    "style": "columnHeader"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "@{body('Get_incident')?['createdDateTime']}",
+                                    "wrap": true
+                                }
+                            ],
+                            "horizontalAlignment": "Left"
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**Severity:**",
+                                    "wrap": true,
+                                    "style": "columnHeader"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "@{body('Get_incident')?['severity']}",
+                                    "wrap": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**Status:**",
+                                    "wrap": true,
+                                    "style": "columnHeader"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "@{body('Get_incident')?['status']}",
+                                    "wrap": true
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**Determination:**",
+                                    "wrap": true,
+                                    "style": "columnHeader"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "@{body('Get_incident')?['determination']}",
+                                    "wrap": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**Classification:**",
+                                    "wrap": true,
+                                    "style": "columnHeader"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "@{body('Get_incident')?['classification']}",
+                                    "wrap": true
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "type": "TextBlock",
+                                    "text": "**Assigned To:**",
+                                    "wrap": true,
+                                    "style": "columnHeader"
+                                },
+                                {
+                                    "type": "TextBlock",
+                                    "text": "@{body('Get_incident')?['assignedTo']}",
+                                    "wrap": true
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "separator": true,
+            "style": "emphasis"
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "**Description:**",
+                    "wrap": true,
+                    "style": "heading",
+                    "size": "Medium",
+                    "color": "Default",
+                    "fontType": "Default"
+                },
+                {
+                    "text": "@{body('Get_incident')?['description']}",
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "maxLines": 0,
+                    "horizontalAlignment": "Left",
+                    "height": "stretch",
+                    "style": "default",
+                    "fontType": "Default",
+                    "size": "Small",
+                    "weight": "Default"
+                }
+            ],
+            "separator": true
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "text": "**Recommended Actions:**",
+                    "type": "TextBlock",
+                    "wrap": true,
+                    "style": "heading",
+                    "fontType": "Default",
+                    "size": "Medium"
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "@{body('Get_incident')?['recommendedActions']}",
+                    "wrap": true,
+                    "style": "default",
+                    "height": "stretch",
+                    "fontType": "Default",
+                    "size": "Small",
+                    "weight": "Default",
+                    "color": "Default"
+                }
+            ],
+            "separator": true
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "type": "TextBlock",
+                    "text": "**Recommended Hunting Queries:**",
+                    "wrap": true
+                },
+                {
+                    "type": "TextBlock",
+                    "text": "@{variables('kqlQueries')}",
+                    "wrap": true,
+                    "fontType": "Monospace",
+                    "color": "Default"
+                }
+            ],
+            "separator": true,
+            "style": "default"
+        },
+        {
+            "type": "Container",
+            "items": [
+                {
+                    "size": "Large",
+                    "spacing": "Large",
+                    "text": "**Manage incident**:",
+                    "type": "TextBlock",
+                    "weight": "Bolder",
+                    "style": "heading"
+                },
+                {
+                    "type": "ColumnSet",
+                    "columns": [
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "text": "Change incident status?",
+                                    "type": "TextBlock"
+                                },
+                                {
+                                    "choices": [
+                                        {
+                                            "isSelected": true,
+                                            "title": "Close incident - False Positive",
+                                            "value": "FalsePositive - IncorrectAlertLogic"
+                                        },
+                                        {
+                                            "title": "Close incident - True Positive",
+                                            "value": "TruePositive - SuspiciousActivity"
+                                        },
+                                        {
+                                            "title": "Close incident - Benign Positive",
+                                            "value": "BenignPositive - SuspiciousButExpected"
+                                        },
+                                        {
+                                            "title": "Don't change",
+                                            "value": "no"
+                                        }
+                                    ],
+                                    "id": "incidentStatus",
+                                    "type": "Input.ChoiceSet",
+                                    "value": "no"
+                                }
+                            ]
+                        },
+                        {
+                            "type": "Column",
+                            "width": "stretch",
+                            "items": [
+                                {
+                                    "text": "Change response tasks statuses?",
+                                    "type": "TextBlock"
+                                },
+                                {
+                                    "choices": [
+                                        {
+                                            "isSelected": true,
+                                            "title": "In progress",
+                                            "value": "inProgress"
+                                        },
+                                        {
+                                            "title": "Skip",
+                                            "value": "skip"
+                                        },
+                                        {
+                                            "title": "Completed",
+                                            "value": "completed"
+                                        },
+                                        {
+                                            "title": "Don't change",
+                                            "value": "same"
+                                        }
+                                    ],
+                                    "id": "responseTasks",
+                                    "type": "Input.ChoiceSet",
+                                    "value": "same"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "separator": true
+        }
+    ],
+    "type": "AdaptiveCard",
+    "version": "1.5"
+}
