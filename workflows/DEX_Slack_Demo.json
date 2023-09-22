@@ -1,0 +1,386 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Compose_message": {
+                "actions": {
+                    "Compose_Slack_message": {
+                        "inputs": {
+                            "blocks": [
+                                {
+                                    "text": {
+                                        "emoji": true,
+                                        "text": "New incident: @{body('Get_incident')?['id']} - @{body('Get_incident')?['displayName']}",
+                                        "type": "plain_text"
+                                    },
+                                    "type": "header"
+                                },
+                                {
+                                    "fields": [
+                                        {
+                                            "text": "*Created Time:*\n@{body('Get_incident')?['createdDateTime']}",
+                                            "type": "mrkdwn"
+                                        },
+                                        {
+                                            "text": "*Severity:*\n@{body('Get_incident')?['severity']}",
+                                            "type": "mrkdwn"
+                                        },
+                                        {
+                                            "text": "*Status:*\n@{body('Get_incident')?['status']}",
+                                            "type": "mrkdwn"
+                                        },
+                                        {
+                                            "text": "*Assigned To:*\n@{body('Get_incident')?['assignedTo']}",
+                                            "type": "mrkdwn"
+                                        },
+                                        {
+                                            "text": "*Link to portal:*\n<@{body('Get_incident')?['incidentWebUrl']}|Incident @{body('Get_incident')?['id']}>",
+                                            "type": "mrkdwn"
+                                        }
+                                    ],
+                                    "type": "section"
+                                },
+                                {
+                                    "fields": [
+                                        {
+                                            "text": "*Determination:*\n@{body('Get_incident')?['determination']}",
+                                            "type": "mrkdwn"
+                                        },
+                                        {
+                                            "text": "*Classification:*\n@{body('Get_incident')?['classification']}",
+                                            "type": "mrkdwn"
+                                        },
+                                        {
+                                            "text": "*System Tags:*\n@{body('Get_incident')?['systemTags']}",
+                                            "type": "mrkdwn"
+                                        },
+                                        {
+                                            "text": "*Custom Tags:*\n@{body('Get_incident')?['customTags']}",
+                                            "type": "mrkdwn"
+                                        }
+                                    ],
+                                    "type": "section"
+                                },
+                                {
+                                    "type": "divider"
+                                },
+                                {
+                                    "fields": [
+                                        {
+                                            "text": "*Description:*\n@{variables('description')}",
+                                            "type": "mrkdwn"
+                                        }
+                                    ],
+                                    "type": "section"
+                                },
+                                {
+                                    "type": "divider"
+                                },
+                                {
+                                    "fields": [
+                                        {
+                                            "text": "*Recommended Actions:*\n@{variables('recommendedActions')}",
+                                            "type": "mrkdwn"
+                                        }
+                                    ],
+                                    "type": "section"
+                                },
+                                {
+                                    "type": "divider"
+                                },
+                                {
+                                    "fields": [
+                                        {
+                                            "text": "*Recommended Hunting Queries:*\n@{variables('kqlQueries')}",
+                                            "type": "mrkdwn"
+                                        }
+                                    ],
+                                    "type": "section"
+                                },
+                                {
+                                    "elements": [
+                                        {
+                                            "style": "primary",
+                                            "text": {
+                                                "emoji": true,
+                                                "text": "Resolve",
+                                                "type": "plain_text"
+                                            },
+                                            "type": "button",
+                                            "value": "click_me_123"
+                                        },
+                                        {
+                                            "style": "danger",
+                                            "text": {
+                                                "emoji": true,
+                                                "text": "Reject",
+                                                "type": "plain_text"
+                                            },
+                                            "type": "button",
+                                            "value": "click_me_123"
+                                        }
+                                    ],
+                                    "type": "actions"
+                                }
+                            ]
+                        },
+                        "runAfter": {
+                            "If_KQL_queries": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Compose"
+                    },
+                    "If_KQL_queries": {
+                        "actions": {
+                            "For_each_query": {
+                                "actions": {
+                                    "Append_to_string_variable": {
+                                        "inputs": {
+                                            "name": "kqlQueries",
+                                            "value": "@concat(items('For_each_query')?['kqlText'], '\\n\\n')"
+                                        },
+                                        "runAfter": {},
+                                        "type": "AppendToStringVariable"
+                                    }
+                                },
+                                "foreach": "@body('Get_incident')?['recommendedHuntingQueries']",
+                                "runAfter": {},
+                                "type": "Foreach"
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "equals": [
+                                        "@empty(body('Get_incident')?['recommendedHuntingQueries'])",
+                                        "@false"
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {
+                            "If_recommendedActions_is_over_2000_char": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "If"
+                    },
+                    "If_description_is_over_2000_char": {
+                        "actions": {
+                            "Set_truncated_description": {
+                                "inputs": {
+                                    "name": "description",
+                                    "value": "@{substring(body('Get_incident')?['description'], 0, 1950)} **TRUNCATED**"
+                                },
+                                "runAfter": {},
+                                "type": "SetVariable"
+                            }
+                        },
+                        "description": "Slack allows 2000 char max",
+                        "else": {
+                            "actions": {
+                                "Set_description": {
+                                    "inputs": {
+                                        "name": "description",
+                                        "value": "@body('Get_incident')?['description']"
+                                    },
+                                    "runAfter": {},
+                                    "type": "SetVariable"
+                                }
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "greaterOrEquals": [
+                                        "@length(body('Get_incident')?['description'])",
+                                        2000
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {},
+                        "type": "If"
+                    },
+                    "If_recommendedActions_is_over_2000_char": {
+                        "actions": {
+                            "Set_truncated_recommendedActions": {
+                                "inputs": {
+                                    "name": "recommendedActions",
+                                    "value": "@{substring(body('Get_incident')?['recommendedActions'], 0, 1950)} **TRUNCATED**"
+                                },
+                                "runAfter": {},
+                                "type": "SetVariable"
+                            }
+                        },
+                        "description": "Slack allows 2000 char max",
+                        "else": {
+                            "actions": {
+                                "Set_recommendedActions": {
+                                    "inputs": {
+                                        "name": "recommendedActions",
+                                        "value": "@body('Get_incident')?['recommendedActions']"
+                                    },
+                                    "runAfter": {},
+                                    "type": "SetVariable"
+                                }
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "greaterOrEquals": [
+                                        "@length(body('Get_incident')?['recommendedActions'])",
+                                        2000
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {
+                            "If_description_is_over_2000_char": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "If"
+                    }
+                },
+                "runAfter": {
+                    "Get_incident": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Scope"
+            },
+            "Get_incident": {
+                "inputs": {
+                    "headers": {
+                        "Prefer": "include-unknown-enum-members"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['GraphSecurity']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/beta/security/incidents/@{encodeURIComponent('YOU_INCIDENT_ID_HERE')}"
+                },
+                "runAfter": {
+                    "Initialize_recommendedActions": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            },
+            "Initialize_description": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "description",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_kqlQueries": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_kqlQueries": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "kqlQueries",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_slackWebhook": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_recommendedActions": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "recommendedActions",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_description": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_slackWebhook": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "slackWebhook",
+                            "type": "string",
+                            "value": "YOUR_SLACK_WEBHOOK_HERE"
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "type": "InitializeVariable"
+            },
+            "Post_Slack_message": {
+                "inputs": {
+                    "body": "@outputs('Compose_Slack_message')",
+                    "headers": {
+                        "content-type": "application/json"
+                    },
+                    "method": "POST",
+                    "uri": "@variables('slackWebhook')"
+                },
+                "runAfter": {
+                    "Compose_message": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Http"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "Recurrence": {
+                "evaluatedRecurrence": {
+                    "frequency": "Month",
+                    "interval": 3
+                },
+                "recurrence": {
+                    "frequency": "Month",
+                    "interval": 3
+                },
+                "type": "Recurrence"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "GraphSecurity": {
+                    "connectionId": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/resourceGroups/DefenderExperts/providers/Microsoft.Web/connections/GraphSecurity",
+                    "connectionName": "GraphSecurity",
+                    "id": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/resourceGroups/DefenderExperts/providers/Microsoft.Web/customApis/GraphSecurity"
+                }
+            }
+        }
+    }
+}

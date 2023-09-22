@@ -25,6 +25,10 @@
                 {
                     "text": "*Assigned To:*\n@{body('Get_incident')?['assignedTo']}",
                     "type": "mrkdwn"
+                },
+                {
+                    "text": "*Link to portal:*\n<@{body('Get_incident')?['incidentWebUrl']}|Incident @{body('Get_incident')?['id']}>",
+                    "type": "mrkdwn"
                 }
             ],
             "type": "section"
@@ -56,16 +60,31 @@
         {
             "fields": [
                 {
-                    "text": "*Description:*\n@{body('Get_incident')?['description']}",
+                    "text": "*Description:*\n@{variables('description')}",
                     "type": "mrkdwn"
                 }
             ],
             "type": "section"
         },
         {
+            "type": "divider"
+        },
+        {
             "fields": [
                 {
-                    "text": "*Recommended Hunting Queries:*\n@{body('Get_incident')?['recommendedHuntingQueries']?['kqlText']}",
+                    "text": "*Recommended Actions:*\n@{variables('recommendedActions')}",
+                    "type": "mrkdwn"
+                }
+            ],
+            "type": "section"
+        },
+        {
+            "type": "divider"
+        },
+        {
+            "fields": [
+                {
+                    "text": "*Recommended Hunting Queries:*\n@{variables('kqlQueries')}",
                     "type": "mrkdwn"
                 }
             ],
