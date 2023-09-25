@@ -240,27 +240,71 @@
                             "width": "stretch",
                             "items": [
                                 {
-                                    "text": "Change incident status?",
+                                    "text": "Resolve incident?",
                                     "type": "TextBlock"
                                 },
                                 {
                                     "choices": [
                                         {
-                                            "isSelected": true,
-                                            "title": "Close incident - False Positive",
-                                            "value": "FalsePositive - IncorrectAlertLogic"
+                                            "title": "True positive - Multi staged attack",
+                                            "value": "truePositive-multiStagedAttack"
                                         },
                                         {
-                                            "title": "Close incident - True Positive",
-                                            "value": "TruePositive - SuspiciousActivity"
+                                            "title": "True positive - Malware",
+                                            "value": "truePositive-malware"
                                         },
                                         {
-                                            "title": "Close incident - Benign Positive",
-                                            "value": "BenignPositive - SuspiciousButExpected"
+                                            "title": "True positive - Malicious user activity",
+                                            "value": "truePositive-maliciousUserActivity"
+                                        },
+                                        {
+                                            "title": "True positive - Unwanted software",
+                                            "value": "truePositive-unwantedSoftware"
+                                        },
+                                        {
+                                            "title": "True positive - Phising",
+                                            "value": "truePositive-phishing"
+                                        },
+                                        {
+                                            "title": "True positive - True positive - Compromised account",
+                                            "value": "truePositive-compromisedUser"
+                                        },
+                                        {
+                                            "title": "True positive - Other",
+                                            "value": "truePositive-other"
+                                        },
+                                        {
+                                            "title": "Informational, expected activity - Security testing",
+                                            "value": "informationalExpectedActivity-securityTesting"
+                                        },
+                                        {
+                                            "title": "Informational, Confirmed activity",
+                                            "value": "informationalExpectedActivity-confirmedUserActivity"
+                                        },
+                                        {
+                                            "title": "Informational, expected activity - Line of business application",
+                                            "value": "informationalExpectedActivity-lineOfBusinessApplication"
+                                        },
+                                        {
+                                            "title": "Informational, expected activity - Other",
+                                            "value": "informationalExpectedActivity-other"
+                                        },
+                                        {
+                                            "title": "False positive - Not malicious",
+                                            "value": "falsePositive-notMalicious"
+                                        },
+                                        {
+                                            "title": "False positive - Not enough data to validate",
+                                            "value": "falsePositive-notEnoughDataToValidate"
+                                        },
+                                        {
+                                            "title": "False positive - Other",
+                                            "value": "falsePositive-other"
                                         },
                                         {
                                             "title": "Don't change",
-                                            "value": "no"
+                                            "value": "no",
+                                            "isSelected": true
                                         }
                                     ],
                                     "id": "incidentStatus",

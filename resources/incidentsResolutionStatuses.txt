@@ -1,0 +1,28 @@
+True positive - Multi staged attack
+truePositive-multiStagedAttack
+True positive - Malware
+truePositive-malware
+True positive - Malicious user activity
+truePositive-maliciousUserActivity
+True positive - Unwanted software
+truePositive-unwantedSoftware
+True positive - Phishing
+truePositive-phishing
+True positive - Compromised account
+truePositive-compromisedUser
+True positive - Other
+truePositive-other
+Informational, expected activity - Security testing
+informationalExpectedActivity-securityTesting
+Informational, expected activity - Confirmed activity
+informationalExpectedActivity-confirmedUserActivity
+Informational, expected activity - Line of business application
+informationalExpectedActivity-lineOfBusinessApplication
+Informational, expected activity - Other
+informationalExpectedActivity-other
+False positive - Not malicious
+falsePositive-notMalicious
+False positive - Not enough data to validate
+falsePositive-notEnoughDataToValidate
+False positive - Other
+falsePositive-other

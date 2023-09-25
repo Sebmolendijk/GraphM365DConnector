@@ -1,0 +1,631 @@
+{
+    "definition": {
+        "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
+        "actions": {
+            "Compose": {
+                "inputs": "@body('Post_adaptive_card_and_wait_for_a_response')",
+                "runAfter": {
+                    "Post_adaptive_card_and_wait_for_a_response": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Compose"
+            },
+            "Compose_message": {
+                "actions": {
+                    "Compose_adaptive_card": {
+                        "inputs": {
+                            "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                            "actions": [
+                                {
+                                    "data": {
+                                        "x": "confirm"
+                                    },
+                                    "title": "Submit",
+                                    "type": "Action.Submit"
+                                }
+                            ],
+                            "body": [
+                                {
+                                    "fontType": "Default",
+                                    "isSubtle": true,
+                                    "size": "Large",
+                                    "style": "heading",
+                                    "text": "@{body('Get_incident')?['id']} - @{body('Get_incident')?['id']} - @{body('Get_incident')?['id']} - @{body('Get_incident')?['displayName']}",
+                                    "type": "TextBlock",
+                                    "weight": "Bolder",
+                                    "wrap": true
+                                },
+                                {
+                                    "fontType": "Default",
+                                    "size": "Small",
+                                    "style": "default",
+                                    "text": "[Link to the Incident](@{body('Get_incident')?['incidentWebUrl']})",
+                                    "type": "TextBlock",
+                                    "weight": "Bolder",
+                                    "wrap": true
+                                },
+                                {
+                                    "items": [
+                                        {
+                                            "columns": [
+                                                {
+                                                    "horizontalAlignment": "Left",
+                                                    "items": [
+                                                        {
+                                                            "style": "columnHeader",
+                                                            "text": "**Created Time:**",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        },
+                                                        {
+                                                            "text": "@{body('Get_incident')?['createdDateTime']}",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        }
+                                                    ],
+                                                    "type": "Column",
+                                                    "width": "stretch"
+                                                },
+                                                {
+                                                    "items": [
+                                                        {
+                                                            "style": "columnHeader",
+                                                            "text": "**Severity:**",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        },
+                                                        {
+                                                            "text": "@{body('Get_incident')?['severity']}",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        }
+                                                    ],
+                                                    "type": "Column",
+                                                    "width": "stretch"
+                                                },
+                                                {
+                                                    "items": [
+                                                        {
+                                                            "style": "columnHeader",
+                                                            "text": "**Status:**",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        },
+                                                        {
+                                                            "text": "@{body('Get_incident')?['status']}",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        }
+                                                    ],
+                                                    "type": "Column",
+                                                    "width": "stretch"
+                                                }
+                                            ],
+                                            "type": "ColumnSet"
+                                        },
+                                        {
+                                            "columns": [
+                                                {
+                                                    "items": [
+                                                        {
+                                                            "style": "columnHeader",
+                                                            "text": "**Determination:**",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        },
+                                                        {
+                                                            "text": "@{body('Get_incident')?['determination']}",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        }
+                                                    ],
+                                                    "type": "Column",
+                                                    "width": "stretch"
+                                                },
+                                                {
+                                                    "items": [
+                                                        {
+                                                            "style": "columnHeader",
+                                                            "text": "**Classification:**",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        },
+                                                        {
+                                                            "text": "@{body('Get_incident')?['classification']}",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        }
+                                                    ],
+                                                    "type": "Column",
+                                                    "width": "stretch"
+                                                },
+                                                {
+                                                    "items": [
+                                                        {
+                                                            "style": "columnHeader",
+                                                            "text": "**Assigned To:**",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        },
+                                                        {
+                                                            "text": "@{body('Get_incident')?['assignedTo']}",
+                                                            "type": "TextBlock",
+                                                            "wrap": true
+                                                        }
+                                                    ],
+                                                    "type": "Column",
+                                                    "width": "stretch"
+                                                }
+                                            ],
+                                            "type": "ColumnSet"
+                                        }
+                                    ],
+                                    "separator": true,
+                                    "style": "emphasis",
+                                    "type": "Container"
+                                },
+                                {
+                                    "items": [
+                                        {
+                                            "color": "Default",
+                                            "fontType": "Default",
+                                            "size": "Medium",
+                                            "style": "heading",
+                                            "text": "**Description:**",
+                                            "type": "TextBlock",
+                                            "wrap": true
+                                        },
+                                        {
+                                            "fontType": "Default",
+                                            "height": "stretch",
+                                            "horizontalAlignment": "Left",
+                                            "maxLines": 0,
+                                            "size": "Small",
+                                            "style": "default",
+                                            "text": "@{body('Get_incident')?['description']}",
+                                            "type": "TextBlock",
+                                            "weight": "Default",
+                                            "wrap": true
+                                        }
+                                    ],
+                                    "separator": true,
+                                    "type": "Container"
+                                },
+                                {
+                                    "items": [
+                                        {
+                                            "fontType": "Default",
+                                            "size": "Medium",
+                                            "style": "heading",
+                                            "text": "**Recommended Actions:**",
+                                            "type": "TextBlock",
+                                            "wrap": true
+                                        },
+                                        {
+                                            "color": "Default",
+                                            "fontType": "Default",
+                                            "height": "stretch",
+                                            "size": "Small",
+                                            "style": "default",
+                                            "text": "@{body('Get_incident')?['recommendedActions']}",
+                                            "type": "TextBlock",
+                                            "weight": "Default",
+                                            "wrap": true
+                                        }
+                                    ],
+                                    "separator": true,
+                                    "type": "Container"
+                                },
+                                {
+                                    "items": [
+                                        {
+                                            "text": "**Recommended Hunting Queries:**",
+                                            "type": "TextBlock",
+                                            "wrap": true
+                                        },
+                                        {
+                                            "color": "Default",
+                                            "fontType": "Monospace",
+                                            "text": "@{variables('kqlQueries')}",
+                                            "type": "TextBlock",
+                                            "wrap": true
+                                        }
+                                    ],
+                                    "separator": true,
+                                    "style": "default",
+                                    "type": "Container"
+                                },
+                                {
+                                    "items": [
+                                        {
+                                            "size": "Large",
+                                            "spacing": "Large",
+                                            "style": "heading",
+                                            "text": "**Manage incident**:",
+                                            "type": "TextBlock",
+                                            "weight": "Bolder"
+                                        },
+                                        {
+                                            "columns": [
+                                                {
+                                                    "items": [
+                                                        {
+                                                            "text": "Change incident status?",
+                                                            "type": "TextBlock"
+                                                        },
+                                                        {
+                                                            "choices": [
+                                                                {
+                                                                    "title": "True positive - Multi staged attack",
+                                                                    "value": "truePositive-multiStagedAttack"
+                                                                },
+                                                                {
+                                                                    "title": "True positive - Malware",
+                                                                    "value": "truePositive-malware"
+                                                                },
+                                                                {
+                                                                    "title": "True positive - Malicious user activity",
+                                                                    "value": "truePositive-maliciousUserActivity"
+                                                                },
+                                                                {
+                                                                    "title": "True positive - Unwanted software",
+                                                                    "value": "truePositive-unwantedSoftware"
+                                                                },
+                                                                {
+                                                                    "title": "True positive - Phising",
+                                                                    "value": "truePositive-phishing"
+                                                                },
+                                                                {
+                                                                    "title": "True positive - True positive - Compromised account",
+                                                                    "value": "truePositive-compromisedUser"
+                                                                },
+                                                                {
+                                                                    "title": "True positive - Other",
+                                                                    "value": "truePositive-other"
+                                                                },
+                                                                {
+                                                                    "title": "Informational, expected activity - Security testing",
+                                                                    "value": "informationalExpectedActivity-securityTesting"
+                                                                },
+                                                                {
+                                                                    "title": "Informational, Confirmed activity",
+                                                                    "value": "informationalExpectedActivity-confirmedUserActivity"
+                                                                },
+                                                                {
+                                                                    "title": "Informational, expected activity - Line of business application",
+                                                                    "value": "informationalExpectedActivity-lineOfBusinessApplication"
+                                                                },
+                                                                {
+                                                                    "title": "Informational, expected activity - Other",
+                                                                    "value": "informationalExpectedActivity-other"
+                                                                },
+                                                                {
+                                                                    "title": "False positive - Not malicious",
+                                                                    "value": "falsePositive-notMalicious"
+                                                                },
+                                                                {
+                                                                    "title": "False positive - Not enough data to validate",
+                                                                    "value": "falsePositive-notEnoughDataToValidate"
+                                                                },
+                                                                {
+                                                                    "title": "False positive - Other",
+                                                                    "value": "falsePositive-other"
+                                                                },
+                                                                {
+                                                                    "isSelected": true,
+                                                                    "title": "Don't change",
+                                                                    "value": "no"
+                                                                }
+                                                            ],
+                                                            "id": "incidentStatus",
+                                                            "type": "Input.ChoiceSet",
+                                                            "value": "no"
+                                                        }
+                                                    ],
+                                                    "type": "Column",
+                                                    "width": "stretch"
+                                                },
+                                                {
+                                                    "items": [
+                                                        {
+                                                            "text": "Change response tasks statuses?",
+                                                            "type": "TextBlock"
+                                                        },
+                                                        {
+                                                            "choices": [
+                                                                {
+                                                                    "isSelected": true,
+                                                                    "title": "In progress",
+                                                                    "value": "inProgress"
+                                                                },
+                                                                {
+                                                                    "title": "Skip",
+                                                                    "value": "skip"
+                                                                },
+                                                                {
+                                                                    "title": "Completed",
+                                                                    "value": "completed"
+                                                                },
+                                                                {
+                                                                    "title": "Don't change",
+                                                                    "value": "same"
+                                                                }
+                                                            ],
+                                                            "id": "responseTasks",
+                                                            "type": "Input.ChoiceSet",
+                                                            "value": "same"
+                                                        }
+                                                    ],
+                                                    "type": "Column",
+                                                    "width": "stretch"
+                                                }
+                                            ],
+                                            "type": "ColumnSet"
+                                        }
+                                    ],
+                                    "separator": true,
+                                    "type": "Container"
+                                }
+                            ],
+                            "type": "AdaptiveCard",
+                            "version": "1.4"
+                        },
+                        "runAfter": {
+                            "If_KQL_queries": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "Compose"
+                    },
+                    "If_KQL_queries": {
+                        "actions": {
+                            "For_each_query": {
+                                "actions": {
+                                    "Append_to_string_variable": {
+                                        "inputs": {
+                                            "name": "kqlQueries",
+                                            "value": "@items('For_each_query')?['kqlText']"
+                                        },
+                                        "runAfter": {},
+                                        "type": "AppendToStringVariable"
+                                    }
+                                },
+                                "foreach": "@body('Get_incident')?['recommendedHuntingQueries']",
+                                "runAfter": {},
+                                "type": "Foreach"
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "equals": [
+                                        "@empty(body('Get_incident')?['recommendedHuntingQueries'])",
+                                        "@false"
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {
+                            "If_recommendedActions_is_over_2000_char": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "If"
+                    },
+                    "If_description_is_over_2000_char": {
+                        "actions": {
+                            "Set_truncated_description": {
+                                "inputs": {
+                                    "name": "description",
+                                    "value": "@{substring(body('Get_incident')?['description'], 0, 1950)} **TRUNCATED**"
+                                },
+                                "runAfter": {},
+                                "type": "SetVariable"
+                            }
+                        },
+                        "description": "Slack allows 2000 char max",
+                        "else": {
+                            "actions": {
+                                "Set_description": {
+                                    "inputs": {
+                                        "name": "description",
+                                        "value": "@body('Get_incident')?['description']"
+                                    },
+                                    "runAfter": {},
+                                    "type": "SetVariable"
+                                }
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "greaterOrEquals": [
+                                        "@length(body('Get_incident')?['description'])",
+                                        2000
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {},
+                        "type": "If"
+                    },
+                    "If_recommendedActions_is_over_2000_char": {
+                        "actions": {
+                            "Set_truncated_recommendedActions": {
+                                "inputs": {
+                                    "name": "recommendedActions",
+                                    "value": "@{substring(body('Get_incident')?['recommendedActions'], 0, 1950)} **TRUNCATED**"
+                                },
+                                "runAfter": {},
+                                "type": "SetVariable"
+                            }
+                        },
+                        "description": "Slack allows 2000 char max",
+                        "else": {
+                            "actions": {
+                                "Set_recommendedActions": {
+                                    "inputs": {
+                                        "name": "recommendedActions",
+                                        "value": "@body('Get_incident')?['recommendedActions']"
+                                    },
+                                    "runAfter": {},
+                                    "type": "SetVariable"
+                                }
+                            }
+                        },
+                        "expression": {
+                            "and": [
+                                {
+                                    "greaterOrEquals": [
+                                        "@length(body('Get_incident')?['recommendedActions'])",
+                                        2000
+                                    ]
+                                }
+                            ]
+                        },
+                        "runAfter": {
+                            "If_description_is_over_2000_char": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "If"
+                    }
+                },
+                "runAfter": {
+                    "Get_incident": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "Scope"
+            },
+            "Get_incident": {
+                "inputs": {
+                    "headers": {
+                        "Prefer": "include-unknown-enum-members"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['GraphSecurity']['connectionId']"
+                        }
+                    },
+                    "method": "get",
+                    "path": "/beta/security/incidents/@{encodeURIComponent('20796')}"
+                },
+                "runAfter": {
+                    "Initialize_recommendedActions": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnection"
+            },
+            "Initialize_description": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "description",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_kqlQueries": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Initialize_kqlQueries": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "kqlQueries",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {},
+                "type": "InitializeVariable"
+            },
+            "Initialize_recommendedActions": {
+                "inputs": {
+                    "variables": [
+                        {
+                            "name": "recommendedActions",
+                            "type": "string"
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Initialize_description": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "InitializeVariable"
+            },
+            "Post_adaptive_card_and_wait_for_a_response": {
+                "inputs": {
+                    "body": {
+                        "body": {
+                            "messageBody": "@{outputs('Compose_adaptive_card')}",
+                            "recipient": {
+                                "channelId": "19:7af40a05c7894abfac13d59d02d6f7e7@thread.skype",
+                                "groupId": "d05ba55c-593e-4bfa-8011-26e0626b5c14"
+                            }
+                        },
+                        "notificationUrl": "@{listCallbackUrl()}"
+                    },
+                    "host": {
+                        "connection": {
+                            "name": "@parameters('$connections')['teams']['connectionId']"
+                        }
+                    },
+                    "path": "/v1.0/teams/conversation/gatherinput/poster/@{encodeURIComponent('Flow bot')}/location/@{encodeURIComponent('Channel')}/$subscriptions"
+                },
+                "runAfter": {
+                    "Compose_message": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "ApiConnectionWebhook"
+            }
+        },
+        "contentVersion": "1.0.0.0",
+        "outputs": {},
+        "parameters": {
+            "$connections": {
+                "defaultValue": {},
+                "type": "Object"
+            }
+        },
+        "triggers": {
+            "Recurrence": {
+                "evaluatedRecurrence": {
+                    "frequency": "Month",
+                    "interval": 3
+                },
+                "recurrence": {
+                    "frequency": "Month",
+                    "interval": 3
+                },
+                "type": "Recurrence"
+            }
+        }
+    },
+    "parameters": {
+        "$connections": {
+            "value": {
+                "GraphSecurity": {
+                    "connectionId": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/resourceGroups/DefenderExperts/providers/Microsoft.Web/connections/GraphSecurity",
+                    "connectionName": "GraphSecurity",
+                    "id": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/resourceGroups/DefenderExperts/providers/Microsoft.Web/customApis/GraphSecurity"
+                },
+                "teams": {
+                    "connectionId": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/resourceGroups/DefenderExperts/providers/Microsoft.Web/connections/teams",
+                    "connectionName": "teams",
+                    "id": "/subscriptions/d1d8779d-38d7-4f06-91db-9cbc8de0176f/providers/Microsoft.Web/locations/eastus2/managedApis/teams"
+                }
+            }
+        }
+    }
+}
