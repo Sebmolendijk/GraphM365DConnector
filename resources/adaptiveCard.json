@@ -14,7 +14,7 @@
             "type": "TextBlock",
             "size": "Large",
             "weight": "Bolder",
-            "text": "@{body('Get_incident')?['id']} - @{body('Get_incident')?['id']} - @{body('Get_incident')?['id']} - @{body('Get_incident')?['displayName']}",
+            "text": "@{body('Get_incident')?['id']} - @{body('Get_incident')?['displayName']}",
             "style": "heading",
             "fontType": "Default",
             "isSubtle": true,
@@ -261,12 +261,12 @@
                                             "value": "truePositive-unwantedSoftware"
                                         },
                                         {
-                                            "title": "True positive - Phising",
+                                            "title": "True positive - Phishing",
                                             "value": "truePositive-phishing"
                                         },
                                         {
                                             "title": "True positive - True positive - Compromised account",
-                                            "value": "truePositive-compromisedUser"
+                                            "value": "truePositive-compromisedAccount"
                                         },
                                         {
                                             "title": "True positive - Other",
@@ -302,20 +302,14 @@
                                         },
                                         {
                                             "title": "Don't change",
-                                            "value": "no",
+                                            "value": "same",
                                             "isSelected": true
                                         }
                                     ],
                                     "id": "incidentStatus",
                                     "type": "Input.ChoiceSet",
-                                    "value": "no"
-                                }
-                            ]
-                        },
-                        {
-                            "type": "Column",
-                            "width": "stretch",
-                            "items": [
+                                    "value": "same"
+                                },
                                 {
                                     "text": "Change response tasks statuses?",
                                     "type": "TextBlock"

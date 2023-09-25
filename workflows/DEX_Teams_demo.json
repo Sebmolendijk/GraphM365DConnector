@@ -2,15 +2,6 @@
     "definition": {
         "$schema": "https://schema.management.azure.com/providers/Microsoft.Logic/schemas/2016-06-01/workflowdefinition.json#",
         "actions": {
-            "Compose": {
-                "inputs": "@body('Post_adaptive_card_and_wait_for_a_response')",
-                "runAfter": {
-                    "Post_adaptive_card_and_wait_for_a_response": [
-                        "Succeeded"
-                    ]
-                },
-                "type": "Compose"
-            },
             "Compose_message": {
                 "actions": {
                     "Compose_adaptive_card": {
@@ -31,7 +22,7 @@
                                     "isSubtle": true,
                                     "size": "Large",
                                     "style": "heading",
-                                    "text": "@{body('Get_incident')?['id']} - @{body('Get_incident')?['id']} - @{body('Get_incident')?['id']} - @{body('Get_incident')?['displayName']}",
+                                    "text": " @{body('Get_incident')?['id']} - @{body('Get_incident')?['displayName']}",
                                     "type": "TextBlock",
                                     "weight": "Bolder",
                                     "wrap": true
@@ -273,12 +264,12 @@
                                                                     "value": "truePositive-unwantedSoftware"
                                                                 },
                                                                 {
-                                                                    "title": "True positive - Phising",
+                                                                    "title": "True positive - Phishing",
                                                                     "value": "truePositive-phishing"
                                                                 },
                                                                 {
                                                                     "title": "True positive - True positive - Compromised account",
-                                                                    "value": "truePositive-compromisedUser"
+                                                                    "value": "truePositive-compromisedAccount"
                                                                 },
                                                                 {
                                                                     "title": "True positive - Other",
@@ -315,19 +306,13 @@
                                                                 {
                                                                     "isSelected": true,
                                                                     "title": "Don't change",
-                                                                    "value": "no"
+                                                                    "value": "same"
                                                                 }
                                                             ],
                                                             "id": "incidentStatus",
                                                             "type": "Input.ChoiceSet",
-                                                            "value": "no"
-                                                        }
-                                                    ],
-                                                    "type": "Column",
-                                                    "width": "stretch"
-                                                },
-                                                {
-                                                    "items": [
+                                                            "value": "same"
+                                                        },
                                                         {
                                                             "text": "Change response tasks statuses?",
                                                             "type": "TextBlock"
@@ -373,7 +358,8 @@
                         },
                         "runAfter": {
                             "If_KQL_queries": [
-                                "Succeeded"
+                                "Succeeded",
+                                "Failed"
                             ]
                         },
                         "type": "Compose"
@@ -408,7 +394,8 @@
                         },
                         "runAfter": {
                             "If_recommendedActions_is_over_2000_char": [
-                                "Succeeded"
+                                "Succeeded",
+                                "Failed"
                             ]
                         },
                         "type": "If"
@@ -486,7 +473,8 @@
                         },
                         "runAfter": {
                             "If_description_is_over_2000_char": [
-                                "Succeeded"
+                                "Succeeded",
+                                "Failed"
                             ]
                         },
                         "type": "If"
@@ -510,7 +498,7 @@
                         }
                     },
                     "method": "get",
-                    "path": "/beta/security/incidents/@{encodeURIComponent('20796')}"
+                    "path": "/beta/security/incidents/@{encodeURIComponent('21146')}"
                 },
                 "runAfter": {
                     "Initialize_recommendedActions": [
@@ -518,6 +506,73 @@
                     ]
                 },
                 "type": "ApiConnection"
+            },
+            "If_status_changed": {
+                "actions": {
+                    "Add_incident_comment": {
+                        "inputs": {
+                            "body": {
+                                "@@odata.type": "microsoft.graph.security.alertComment",
+                                "comment": "Incidents resolved from Teams"
+                            },
+                            "headers": {
+                                "Prefer": "include-unknown-enum-members"
+                            },
+                            "host": {
+                                "connection": {
+                                    "name": "@parameters('$connections')['GraphSecurity']['connectionId']"
+                                }
+                            },
+                            "method": "post",
+                            "path": "/beta/security/incidents/@{encodeURIComponent(body('Get_incident')?['id'])}/comments"
+                        },
+                        "runAfter": {
+                            "Update_incident": [
+                                "Succeeded"
+                            ]
+                        },
+                        "type": "ApiConnection"
+                    },
+                    "Update_incident": {
+                        "inputs": {
+                            "body": {
+                                "classification": "@{split(body('Post_adaptive_card_and_wait_for_a_response')?['data']?['incidentStatus'], '-')[0]}",
+                                "determination": "@{split(body('Post_adaptive_card_and_wait_for_a_response')?['data']?['incidentStatus'], '-')[1]}",
+                                "status": "resolved"
+                            },
+                            "headers": {
+                                "Prefer": "include-unknown-enum-members"
+                            },
+                            "host": {
+                                "connection": {
+                                    "name": "@parameters('$connections')['GraphSecurity']['connectionId']"
+                                }
+                            },
+                            "method": "patch",
+                            "path": "/beta/security/incidents/@{encodeURIComponent(body('Get_incident')?['id'])}"
+                        },
+                        "runAfter": {},
+                        "type": "ApiConnection"
+                    }
+                },
+                "expression": {
+                    "and": [
+                        {
+                            "not": {
+                                "equals": [
+                                    "@body('Post_adaptive_card_and_wait_for_a_response')?['data']?['incidentStatus']",
+                                    "same"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                "runAfter": {
+                    "Post_adaptive_card_and_wait_for_a_response": [
+                        "Succeeded"
+                    ]
+                },
+                "type": "If"
             },
             "Initialize_description": {
                 "inputs": {

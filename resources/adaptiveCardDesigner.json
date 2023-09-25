@@ -267,7 +267,7 @@
                                         },
                                         {
                                             "title": "True positive - True positive - Compromised account",
-                                            "value": "truePositive-compromisedUser"
+                                            "value": "truePositive-compromisedAccount"
                                         },
                                         {
                                             "title": "True positive - Other",
